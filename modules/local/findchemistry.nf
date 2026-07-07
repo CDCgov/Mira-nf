@@ -18,9 +18,9 @@ process FINDCHEMISTRY {
     task.ext.when == null || task.ext.when
 
     script:
-    // If fluad irma module is selected, set experiment to FLU-AD, otherwise use the experiment parameter
+    // If ad irma module is selected, set experiment to FLU-AD, otherwise use the experiment parameter
     def args = task.ext.args ?: ''
-    def experiment = irma_config == 'fluad' ? 'FLU-AD' : params.e
+    def experiment = irma_config == 'ad' ? 'FLU-AD' : params.e
 
     """
     mira-oxide find-chemistry --sample "${sample}" --fastq "${fastq}" --experiment "${experiment}" --wd-path "${projectDir}" --read-count "${read_counts}" --irma-config "${irma_config}" --irma-config-path "${custom_irma_config}"
