@@ -2,7 +2,8 @@ process IRMA {
     tag "${sample}"
 
     label 'process_high'
-    container 'cdcgov/irma:v1.3.4'
+    container 'cdcgov/irma:v1.3.5'
+    containerOptions '--bind ${launchDir}/tmp:/flu-amd/IRMA_RES/ppath'
 
     input:
     tuple val(sample), path(subsampled_fastq_files), path(irma_custom), val(module)

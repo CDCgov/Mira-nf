@@ -2,7 +2,7 @@ process FINDCHEMISTRY {
     tag "${sample}"
     label 'process_single'
 
-    container 'cdcgov/mira-oxide:v1.5.6'
+    container 'cdcgov/mira-oxide:test'
 
     input:
     tuple val(sample), path(fastq)
@@ -18,10 +18,12 @@ process FINDCHEMISTRY {
     task.ext.when == null || task.ext.when
 
     script:
+    // If fluad irma module is selected, set experiment to FLU-AD, otherwise use the experiment parameter
     def args = task.ext.args ?: ''
+    def experiment = irma_config == 'fluad' ? 'FLU-AD' : params.e
 
     """
-    mira-oxide find-chemistry --sample "${sample}" --fastq "${fastq}" --experiment "${params.e}" --wd-path "${projectDir}" --read-count "${read_counts}" --irma-config "${irma_config}" --irma-config-path "${custom_irma_config}"
+    mira-oxide find-chemistry --sample "${sample}" --fastq "${fastq}" --experiment "${experiment}" --wd-path "${projectDir}" --read-count "${read_counts}" --irma-config "${irma_config}" --irma-config-path "${custom_irma_config}"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}": findchemistry: mira-oxide \$(mira-oxide --version |& sed '1!d ; s/mira-oxide //')

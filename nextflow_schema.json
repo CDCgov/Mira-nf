@@ -119,8 +119,8 @@
                 "irma_module": {
                     "type": "string",
                     "default": "none",
-                    "description": "Call flu-sensitive or flu-secondary irma module",
-                    "enum": ["sensitive", "secondary", "utr", "none"]
+                    "description": "Call flu-sensitive, flu-secondary, utr or fluad irma module",
+                    "enum": ["sensitive", "secondary", "utr", "fluad", "none"]
                 },
                 "custom_irma_config": {
                     "type": "string",
