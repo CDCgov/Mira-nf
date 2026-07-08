@@ -13,6 +13,7 @@ process PREPAREMIRAREPORTS {
     val  virus
     val  irma_config_type
     val  runid
+    val qc_setting
 
     output:
     path('*'), emit: all_files
@@ -46,6 +47,7 @@ process PREPAREMIRAREPORTS {
         -v ${virus} \\
         -q ${qc_path} \\
         -c ${irma_config_type} \\
+        
         -r ${runid} \\
         -o ./ \\
         ${parquet_args} \\
