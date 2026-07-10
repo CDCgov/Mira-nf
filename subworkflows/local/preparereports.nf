@@ -84,16 +84,15 @@ workflow PREPAREREPORTS {
         // Getting path to qc_pass_fail_settings.yml
         if (params.custom_qc_settings == null && params.sourcepath == null) {
             qc_path_ch = "${projectDir}/bin/irma_config/qc_pass_fail_settings.yaml"
-            qc_setting_ch = ""
+            qc_setting_ch = Channel.of("")
 
         } else if (params.custom_qc_settings == null && params.sourcepath != null) {
             qc_path_ch = "${params.sourcepath}/bin/irma_config/qc_pass_fail_settings.yaml"
-            qc_setting_ch = ""
+            qc_setting_ch = Channel.of("")
 
         } else {
             qc_path_ch = params.custom_qc_settings
-            qc_setting_ch = "-custom-qc"
-
+            qc_setting_ch = Channel.of("custom-qc")
         }
 
         // Create aggregate reports with or without parquet files
