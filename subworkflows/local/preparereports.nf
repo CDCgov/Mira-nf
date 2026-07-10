@@ -84,16 +84,19 @@ workflow PREPAREREPORTS {
         // Getting path to qc_pass_fail_settings.yml
         if (params.custom_qc_settings == null && params.sourcepath == null) {
             qc_path_ch = "${projectDir}/bin/irma_config/qc_pass_fail_settings.yaml"
+            qc_setting_ch = Channel.of("")
 
         } else if (params.custom_qc_settings == null && params.sourcepath != null) {
             qc_path_ch = "${params.sourcepath}/bin/irma_config/qc_pass_fail_settings.yaml"
+            qc_setting_ch = Channel.of("")
 
         } else {
             qc_path_ch = params.custom_qc_settings
+            qc_setting_ch = Channel.of("custom-qc")
         }
 
         // Create aggregate reports with or without parquet files
-        PREPAREMIRAREPORTS(dais_outputs_ch, support_file_path, irma_dir_ch, samplesheet_ch, qc_path_ch, platform, virus, irma_config_type_ch, runid)
+        PREPAREMIRAREPORTS(dais_outputs_ch, support_file_path, irma_dir_ch, samplesheet_ch, qc_path_ch, platform, virus, irma_config_type_ch, runid, qc_setting_ch)
         ch_versions = ch_versions.mix(PREPAREMIRAREPORTS.out.versions)
         summary_csv_ch = PREPAREMIRAREPORTS.out.summary_csv
         summary_html_ch = PREPAREMIRAREPORTS.out.summary_html

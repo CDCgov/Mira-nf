@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.1.2 - 07.0.2026
+## v2.1.2 - 07.10.2026
 
 - [Amanda Sullivan](https://github.com/mandysulli)
 
@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | irma-core     | 0.9.1   |
 | IRMA          | 1.3.5   |
 | DAIS-ribosome | 1.7.1   |
-| mira-oxide    | 1.5.6   |
+| mira-oxide    | 1.5.8   |
 | nextclade     | 3.21.2  |
 
 ### Nextclade Tags Used
@@ -35,11 +35,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [PR #156](https://github.com/CDCgov/MIRA-NF/pull/156) - added `ad` as an option for the `--irma_module` flag
+- [PR #169](https://github.com/CDCgov/MIRA-NF/pull/170) - added `ad` as an option for the `--irma_module` flag
+- [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - added `--version` flag that will prin the Mira-nf version
+- [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - added "cuistom-qc" to module in summary file if a custom qc yasml is used.
 
 ### `Dependencies`
 
-- [PR #147](https://github.com/CDCgov/MIRA-NF/pull/147) - version bump to v1.3.5 to allow for FLU_AD module
+- [PR #169](https://github.com/CDCgov/MIRA-NF/pull/169) - version bumped IRMA to v1.3.5 to allow for FLU_AD module
+- [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - version bumped mira-oxide to v1.5.8
 
 
 ## v2.1.1 - 06.24.2026
