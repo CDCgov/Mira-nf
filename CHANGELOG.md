@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [PR #169](https://github.com/CDCgov/MIRA-NF/pull/169) - version bumped IRMA to v1.3.5 to allow for FLU_AD module
 - [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - version bumped mira-oxide to v1.5.8
-
+- [PR #177](https://github.com/CDCgov/MIRA-NF/pull/177) - version bumped dais-ribosome to v2.0.2
 
 ## v2.1.1 - 06.24.2026
 
