@@ -15,8 +15,8 @@ process CONFIRMIRMAOUTPUT {
     def args = task.ext.args ?: ''
 
     """
-    [ -d ${sample}/amended_consensus ] &&
-         [ \"\$(ls -A ${sample}/amended_consensus)\" ] &&
+    [ -d ${sample}/IRMA/amended_consensus ] &&
+         [ \"\$(ls -A ${sample}/IRMA/amended_consensus)\" ] &&
          echo passed > ${sample}.irma.decision ||
          echo failed > ${sample}.irma.decision
     """

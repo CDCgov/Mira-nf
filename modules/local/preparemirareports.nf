@@ -1,7 +1,7 @@
 process PREPAREMIRAREPORTS {
     label 'process_medium'
 
-    container 'cdcgov/mira-oxide:v1.5.8'
+    container 'cdcgov/mira-oxide:test'
 
     input:
     path dais_outputs
@@ -33,16 +33,19 @@ process PREPAREMIRAREPORTS {
     def summary_html_passing = params.nextclade ? 'cat mira_*_summary.html > mira_summary_html' : ''
 
     """
+    mkdir -p irma_reports
+    mv ${irma_dir} irma_reports/
+
     if [ ${virus} = "flu" ]; then
     mira-oxide di-stats \\
-        -a ${irma_dir} \\
+        -a ./irma_reports \\
         -r ${runid}
     fi
 
     mira-oxide prepare-mira-reports \\
         -w ${support_file_path} \\
         -s ${samplesheet} \\
-        -i ${irma_dir} \\
+        -i ./irma_reports \\
         -p ${platform} \\
         -v ${virus} \\
         -q ${qc_path} \\
