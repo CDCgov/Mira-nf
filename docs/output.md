@@ -290,10 +290,10 @@ HTML files and combined amended consensus FASTA files are created in this step.
   - mira\_<runid>\_failed_amended_consensus.fasta
   - mira\_<runid>\_amino_acid_consensus.fasta
   - mira\_<runid>\_failed_amino_acid_consensus.fasta
-  - mira_*sample*#\_coverage.html
+  - mira\__sample_#\_coverage.html
   - mira\_<runid>\_summary.html
-  - mira\_<runid>_pass_fail_heatmap.html
-  - mira\_<runid>_coverage_heatmap.html
+  - mira\_<runid>\_pass_fail_heatmap.html
+  - mira\_<runid>\_coverage_heatmap.html
   - mira\_<runid>\_barcode_distribution.html
 
 Explanations of the summary HTML for Illumina data can be found here: <https://cdcgov.github.io/MIRA/articles/running-mira-cli-illumina.html#mira-cli-ouputs>
