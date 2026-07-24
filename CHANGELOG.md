@@ -3,6 +3,43 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.1.3 - 07.24.2026
+
+- [Amanda Sullivan](https://github.com/mandysulli)
+- [Sam Wiley](https://github.com/samcwiley)
+
+### Associated Tags
+
+| Program       | Version |
+| ------------- | ------- |
+| irma-core     | 0.10.1  |
+| IRMA          | 1.3.5   |
+| DAIS-ribosome | 1.7.1   |
+| mira-oxide    | 1.5.8   |
+| nextclade     | 3.21.2  |
+
+### Nextclade Tags Used
+
+| Dataset        | Tag                   |
+| -------------- | --------------------- |
+| flu_h3n2_ha    | 2026-04-14--11-55-23Z |
+| flu_h1n1pdm_ha | 2026-04-14--11-55-23Z |
+| flu_vic_ha     | 2026-04-14--11-55-23Z |
+| flu_h3n2_na    | 2026-04-14--11-55-23Z |
+| flu_h1n1pdm_na | 2026-04-14--11-55-23Z |
+| flu_vic_na     | 2026-04-14--11-55-23Z |
+| rsv_a          | 2026-04-14--11-55-23Z |
+| rsv_b          | 2026-04-14--11-55-23Z |
+| sars-cov-2     | 2026-06-16--14-30-45Z |
+
+### Enhancements
+
+### `Added`
+
+### `Dependencies`
+
+- [PR #179](https://github.com/CDCgov/MIRA-NF/pull/179) - version bumped irma-core to v0.10.1 to for bug fixes and improved error output
+
 ## v2.1.2 - 07.10.2026
 
 - [Amanda Sullivan](https://github.com/mandysulli)
