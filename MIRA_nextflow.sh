@@ -115,7 +115,7 @@ fi
 
 # Run nextflow
 module load nextflow/25.10.4
-nextflow run "$DIRNAME"/MIRA-NF/main.nf \
+nextflow run "$DIRNAME"/Mira-nf/main.nf \
     --input "$INPUT" \
     --outdir "$OUTPATH" \
     --runpath "$RUNPATH" \

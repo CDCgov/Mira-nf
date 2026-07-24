@@ -33,16 +33,16 @@ ENV GO_VERSION=1.26.1
 ENV SINGULARITY_VERSION=4.4.0
 
 RUN curl -L https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tgz \
- && tar -C /usr/local -xzf go.tgz \
- && rm go.tgz \
- && PATH=/usr/local/go/bin:$PATH \
- && curl -L https://github.com/sylabs/singularity/releases/download/v${SINGULARITY_VERSION}/singularity-ce-${SINGULARITY_VERSION}.tar.gz -o s.tgz \
- && tar -xzf s.tgz \
- && cd singularity-ce-${SINGULARITY_VERSION} \
- && ./mconfig \
- && make -C builddir \
- && make -C builddir install \
- && rm -rf /usr/local/go s.tgz singularity-ce-${SINGULARITY_VERSION}
+    && tar -C /usr/local -xzf go.tgz \
+    && rm go.tgz \
+    && PATH=/usr/local/go/bin:$PATH \
+    && curl -L https://github.com/sylabs/singularity/releases/download/v${SINGULARITY_VERSION}/singularity-ce-${SINGULARITY_VERSION}.tar.gz -o s.tgz \
+    && tar -xzf s.tgz \
+    && cd singularity-ce-${SINGULARITY_VERSION} \
+    && ./mconfig \
+    && make -C builddir \
+    && make -C builddir install \
+    && rm -rf /usr/local/go s.tgz singularity-ce-${SINGULARITY_VERSION}
 
 ####################################################################################################
 # BUILD MIRA-NF IMAGE
@@ -95,12 +95,12 @@ ENV HOME=/root
 
 # Pull Nextflow
 RUN mkdir -p /root/.nextflow/framework/25.10.4 \
- && curl -L https://github.com/nextflow-io/nextflow/releases/download/v25.10.4/nextflow -o /usr/local/bin/nextflow --cacert /etc/ssl/certs/ca.crt \
- && chmod +x /usr/local/bin/nextflow \
- && curl -L https://www.nextflow.io/releases/v25.10.4/nextflow-25.10.4-one.jar \
-      -o /root/.nextflow/framework/25.10.4/nextflow-25.10.4-one.jar \
-      --cacert /etc/ssl/certs/ca.crt \
- && nextflow -version
+    && curl -L https://github.com/nextflow-io/nextflow/releases/download/v25.10.4/nextflow -o /usr/local/bin/nextflow --cacert /etc/ssl/certs/ca.crt \
+    && chmod +x /usr/local/bin/nextflow \
+    && curl -L https://www.nextflow.io/releases/v25.10.4/nextflow-25.10.4-one.jar \
+    -o /root/.nextflow/framework/25.10.4/nextflow-25.10.4-one.jar \
+    --cacert /etc/ssl/certs/ca.crt \
+    && nextflow -version
 
 ############# Set up MIRA-NF ##################
 
@@ -112,19 +112,19 @@ COPY . ${PROJECT_DIR}
 
 # Pull Singularity images and convert to sandboxes
 RUN mkdir -p ${PROJECT_DIR}/sandboxes \
- && chmod -R 777 ${PROJECT_DIR}/sandboxes \
- && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-dais-ribosome-v1.7.1     docker://cdcgov/dais-ribosome:v1.7.1 \
- && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-irma-v1.3.4               docker://cdcgov/irma:v1.3.4 \
- && singularity build --sandbox ${PROJECT_DIR}/sandboxes/ghcr.io-cdcgov-irma-core-v0.9.1  docker://ghcr.io/cdcgov/irma-core:v0.9.1 \
- && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-mira-oxide-v1.5.6         docker://ghcr.io/cdcgov/mira-oxide:v1.5.6 \
- && singularity build --sandbox ${PROJECT_DIR}/sandboxes/nextstrain-nextclade-3.21.2       docker://nextstrain/nextclade:3.21.2 \
- && chmod -R 777 ${PROJECT_DIR}/sandboxes
+    && chmod -R 777 ${PROJECT_DIR}/sandboxes \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-dais-ribosome-v2.0.2     docker://cdcgov/dais-ribosome:v2.0.2 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-irma-v1.3.5               docker://cdcgov/irma:v1.3.5 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/ghcr.io-cdcgov-irma-core-v0.10.1  docker://ghcr.io/cdcgov/irma-core:v0.10.1 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-mira-oxide-v1.5.9         docker://ghcr.io/cdcgov/mira-oxide:v1.5.9 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/nextstrain-nextclade-3.21.2       docker://nextstrain/nextclade:3.21.2 \
+    && chmod -R 777 ${PROJECT_DIR}/sandboxes
 
 RUN rm -rf ${PROJECT_DIR}/fastqc \
- && rm -rf ${PROJECT_DIR}/multiqc \
- && rm -rf ${PROJECT_DIR}/.github \
- && rm -rf ${PROJECT_DIR}/.vscode \
- && rm -rf ${PROJECT_DIR}/samples
+    && rm -rf ${PROJECT_DIR}/multiqc \
+    && rm -rf ${PROJECT_DIR}/.github \
+    && rm -rf ${PROJECT_DIR}/.vscode \
+    && rm -rf ${PROJECT_DIR}/samples
 
 ############# Set up working directory ##################
 

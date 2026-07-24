@@ -10,6 +10,7 @@ workflow PREPAREREPORTS {
 
     take:
         dais_outputs_ch // channel: holds dais outputs
+        irma_dir_ch // channel: holds irma outputs
         ch_versions // channel: holds all previous version
 
     main:
@@ -27,7 +28,6 @@ workflow PREPAREREPORTS {
         }
 
         // Get irma directory
-        irma_dir_ch = Channel.fromPath(params.outdir, checkIfExists: true)
         input_ch = Channel.fromPath(params.input, checkIfExists: true)
         //If sourcepath flag is given, then it will use the sourcepath to point to the reference files and support files in preparemirareports
         if (params.sourcepath == null) {
