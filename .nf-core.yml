@@ -17,9 +17,6 @@ lint:
     - .github/CONTRIBUTING.md
     - assets/sendmail_template.txt
     - .prettierignore
-    - .prettierignore
-    - .prettierignore
-    - .prettierignore
     - .github/ISSUE_TEMPLATE/bug_report.yml
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/ISSUE_TEMPLATE/feature_request.yml
@@ -30,18 +27,13 @@ lint:
     - .github/CONTRIBUTING.md
     - .github/.dockstore.yml
     - .github/CONTRIBUTING.md
-    - .github/CONTRIBUTING.md
     - assets/sendmail_template.txt
-    - .prettierignore
-    - .prettierignore
-    - .prettierignore
     - .prettierignore
     - CODE_OF_CONDUCT.md
     - assets/nf-core-mira_logo_light.png
     - docs/images/nf-core-mira_logo_light.png
     - docs/images/nf-core-mira_logo_dark.png
     - .github/ISSUE_TEMPLATE/bug_report.yml
-    - .github/CONTRIBUTING.md
     - .github/PULL_REQUEST_TEMPLATE.md
     - assets/email_template.txt
     - docs/README.md
@@ -104,6 +96,7 @@ lint:
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/awstest.yml
     - .github/workflows/awsfulltest.yml
+    - docs/CONTRIBUTING.md
   readme:
     - nextflow_badge
     - nextflow_badge

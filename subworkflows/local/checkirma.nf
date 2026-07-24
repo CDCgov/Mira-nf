@@ -27,7 +27,7 @@ workflow CHECKIRMA {
     // concat files for dais input and print file to working directory for troubleshooting
     irma_dir_ch = passedSamples.collect()
     dais_ch = CREATEDAISINPUT(passedSamples.collect())
-    
+
 
     emit:
     dais_ch // channel: paths to dais inputs
