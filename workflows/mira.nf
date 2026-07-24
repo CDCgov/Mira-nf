@@ -185,7 +185,7 @@ workflow flu_i {
     }
 
     // SUBWORKFLOW: Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
     // SUBWORKFLOW: Run Nextclade (optional)
@@ -374,7 +374,7 @@ workflow flu_o {
     }
 
     // SUBWORKFLOW: Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
 
@@ -563,7 +563,7 @@ workflow sc2_spike_o {
     }
 
     // Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
 }
@@ -719,7 +719,7 @@ workflow sc2_wgs_o {
     }
 
     //SUBWORKFLOW: Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
     // SUBWORKFLOW: Run Nextclade (optional)
@@ -923,7 +923,7 @@ workflow sc2_wgs_i {
     }
 
     // SUBWORKFLOW: Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
     // SUBWORKFLOW: Run Nextclade (optional)
@@ -1125,7 +1125,7 @@ workflow rsv_i {
     }
 
     // SUBWORKFLOW: Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
     // SUBWORKFLOW: Run Nextclade (optional)
@@ -1311,7 +1311,7 @@ workflow rsv_o {
     }
 
     // SUBWORKFLOW: Create reports
-    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), ch_versions)
+    PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions) 
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
     // SUBWORKFLOW: Run Nextclade (optional)

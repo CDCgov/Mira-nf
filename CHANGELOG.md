@@ -38,12 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR #169](https://github.com/CDCgov/MIRA-NF/pull/170) - added `ad` as an option for the `--irma_module` flag
 - [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - added `--version` flag that will prin the Mira-nf version
 - [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - added "cuistom-qc" to module in summary file if a custom qc yasml is used.
+- [PR #178](https://github.com/CDCgov/MIRA-NF/pull/178) - Reconfiguration of irma output directories and sample path passing
 
 ### `Dependencies`
 
 - [PR #169](https://github.com/CDCgov/MIRA-NF/pull/169) - version bumped IRMA to v1.3.5 to allow for FLU_AD module
-- [PR #171](https://github.com/CDCgov/MIRA-NF/pull/171) - version bumped mira-oxide to v1.5.8
 - [PR #177](https://github.com/CDCgov/MIRA-NF/pull/177) - version bumped dais-ribosome to v2.0.2
+- [PR #178](https://github.com/CDCgov/MIRA-NF/pull/178) - version bumped mira-oxide v1.5.9 -> updates to path input globbing and outputs new individual html's for the barcode, passfail_heatmap and coverage_heatmap graphs for Mira GUI
 
 ## v2.1.1 - 06.24.2026
 

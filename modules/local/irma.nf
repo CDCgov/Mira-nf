@@ -25,6 +25,11 @@ process IRMA {
         --external-config ${irma_custom} \\
         2> ${sample}.irma.stderr.log | tee -a ${sample}.irma.stdout.log
 
+    ## Moving IRMA outputs to top directory to remove nested directory situation in Mira-nf output
+    mkdir -p ./IRMA
+    mv ${sample}/* *.log ./IRMA/
+    mv ./IRMA ./${sample}
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}": irma: \$(echo \$(IRMA | grep -o "v[0-9][^ ]*" | cut -c 2-))
     END_VERSIONS
