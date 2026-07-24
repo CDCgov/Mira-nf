@@ -115,7 +115,7 @@ RUN mkdir -p ${PROJECT_DIR}/sandboxes \
     && chmod -R 777 ${PROJECT_DIR}/sandboxes \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-dais-ribosome-v2.0.2     docker://cdcgov/dais-ribosome:v2.0.2 \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-irma-v1.3.5               docker://cdcgov/irma:v1.3.5 \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/ghcr.io-cdcgov-irma-core-v0.9.1  docker://ghcr.io/cdcgov/irma-core:v0.9.1 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/ghcr.io-cdcgov-irma-core-v0.10.1  docker://ghcr.io/cdcgov/irma-core:v0.10.1 \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-mira-oxide-v1.5.9         docker://ghcr.io/cdcgov/mira-oxide:v1.5.9 \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/nextstrain-nextclade-3.21.2       docker://nextstrain/nextclade:3.21.2 \
     && chmod -R 777 ${PROJECT_DIR}/sandboxes

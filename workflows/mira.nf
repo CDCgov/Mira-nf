@@ -1504,7 +1504,7 @@ workflow MIRA {
                         | Program       | Version |
                         |---------------|---------|
                         | Mira-nf       | 2.1.1   |
-                        | irma-core     | 0.9.1   |
+                        | irma-core     | 0.10.1  |
                         | IRMA          | 1.3.5   |
                         | DAIS-ribosome | 1.7.1   |
                         | mira-oxide    | 1.5.8   |
