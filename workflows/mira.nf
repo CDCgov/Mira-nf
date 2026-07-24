@@ -1503,11 +1503,11 @@ workflow MIRA {
 
                         | Program       | Version |
                         |---------------|---------|
-                        | Mira-nf       | 2.1.1   |
+                        | Mira-nf       | 2.2.0   |
                         | irma-core     | 0.10.1  |
                         | IRMA          | 1.3.5   |
-                        | DAIS-ribosome | 1.7.1   |
-                        | mira-oxide    | 1.5.8   |
+                        | DAIS-ribosome | 2.0.2   |
+                        | mira-oxide    | 1.5.9   |
                         | nextclade     | 3.21.2  |
     #############################################################################
     Typical pipeline command:

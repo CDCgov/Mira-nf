@@ -15,7 +15,7 @@
 
 
 if (params.version) {
-    println "Mira-nf v2.1.1"
+    println "Mira-nf v2.2.0"
     System.exit(0)
 }
 

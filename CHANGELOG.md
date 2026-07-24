@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.1.2 - 07.10.2026
+## v2.2.0 - 07.24.2026
 
 - [Amanda Sullivan](https://github.com/mandysulli)
 - [Sam Wiley](https://github.com/samcwiley)
@@ -14,8 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | ------------- | ------- |
 | irma-core     | 0.10.1  |
 | IRMA          | 1.3.5   |
-| DAIS-ribosome | 1.7.1   |
-| mira-oxide    | 1.5.8   |
+| DAIS-ribosome | 2.0.2   |
+| mira-oxide    | 1.5.9   |
 | nextclade     | 3.21.2  |
 
 ### Nextclade Tags Used
