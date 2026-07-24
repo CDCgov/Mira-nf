@@ -163,7 +163,7 @@ jobs:
           gh release upload "${{ github.ref_name }}" ${{ env.RELEASE_BIN }}-${{ github.ref_name }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
   publish-release:
     name: Publish Release
     needs: [build-release-image-and-linux-artifacts, create-image-manifest, build-mac-artifacts]
