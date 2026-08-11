@@ -1,7 +1,7 @@
 Package: mira-nf
 Type: Package
 Title: Nextflow Pipeline for Influenza, SARS-COV-2 and RSV Assembly and Curation
-Version: 2.2.0
+Version: 2.2.1
 Date: 2026-07-24
 Authors@R:
   c(person(given="Amanda", family="Sullivan", role=c("aut","cre"),
