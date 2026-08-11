@@ -21,10 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dataset        | Tag                   |
 | -------------- | --------------------- |
-| flu_h3n2_ha    | 2026-04-14--11-55-23Z |
+| flu_h3n2_ha    | 2026-08-07--07-54-41Z |
 | flu_h1n1pdm_ha | 2026-04-14--11-55-23Z |
 | flu_vic_ha     | 2026-04-14--11-55-23Z |
-| flu_h3n2_na    | 2026-04-14--11-55-23Z |
+| flu_h3n2_na    | 2026-08-07--07-54-41Z |
 | flu_h1n1pdm_na | 2026-04-14--11-55-23Z |
 | flu_vic_na     | 2026-04-14--11-55-23Z |
 | rsv_a          | 2026-04-14--11-55-23Z |
@@ -34,12 +34,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Enhancements
 
 ### `Added`
-- [PR #184](https://github.com/CDCgov/MIRA-NF/pull/169) - new dais-ribosome outputs for the flu, sc2 and rsv references.
+- [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - new dais-ribosome outputs for the flu, sc2 and rsv references.
 
 ### `Dependencies`
 
-- [PR #184](https://github.com/CDCgov/MIRA-NF/pull/169) - bump to mira-oxide v1.5.10 to fix the subtype changes from new dais-ribosome output
-- [PR #184](https://github.com/CDCgov/MIRA-NF/pull/169) - bump to dais-ribsome to v2.1.0 to fix bvic alignment changes from new dais-ribosome
+- [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to mira-oxide v1.5.10 to fix the subtype changes from new dais-ribosome output
+- [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to dais-ribsome to v2.1.0 to fix bvic alignment changes from new dais-ribosome
+- [PR #185](https://github.com/CDCgov/MIRA-NF/pull/185) - bump the nextclade tag for h3n2
 
 
 ## v2.2.0 - 07.24.2026
