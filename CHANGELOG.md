@@ -21,10 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dataset        | Tag                   |
 | -------------- | --------------------- |
-| flu_h3n2_ha    | 2026-04-14--11-55-23Z |
+| flu_h3n2_ha    | 2026-08-07--07-54-41Z |
 | flu_h1n1pdm_ha | 2026-04-14--11-55-23Z |
 | flu_vic_ha     | 2026-04-14--11-55-23Z |
-| flu_h3n2_na    | 2026-04-14--11-55-23Z |
+| flu_h3n2_na    | 2026-08-07--07-54-41Z |
 | flu_h1n1pdm_na | 2026-04-14--11-55-23Z |
 | flu_vic_na     | 2026-04-14--11-55-23Z |
 | rsv_a          | 2026-04-14--11-55-23Z |
