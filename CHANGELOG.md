@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to mira-oxide v1.5.10 to fix the subtype changes from new dais-ribosome output
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to dais-ribsome to v2.1.0 to fix bvic alignment changes from new dais-ribosome
 - [PR #185](https://github.com/CDCgov/MIRA-NF/pull/185) - bump the nextclade tag for h3n2
+- [PR #187](https://github.com/CDCgov/MIRA-NF/pull/187) - update fastqc and mutliqc containers
 
 ## v2.2.0 - 07.24.2026
 
