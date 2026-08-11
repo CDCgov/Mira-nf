@@ -2,7 +2,7 @@ process MULTIQC {
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
-    container 'cdcgov/multiqc:v1.19-alpine'
+    container 'cdcgov/mira-nf:multiqc-alpine'
 
     input:
     path multiqc_files
