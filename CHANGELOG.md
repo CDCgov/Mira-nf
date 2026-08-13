@@ -3,6 +3,38 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.2.2 - 09.11.2026
+
+- [William Chettleburgh](https://github.com/willchet)
+
+### Associated Tags
+
+| Program       | Version |
+| ------------- | ------- |
+| irma-core     | 0.10.1  |
+| IRMA          | 1.3.5   |
+| DAIS-ribosome | 2.1.0   |
+| mira-oxide    | 1.5.10  |
+| nextclade     | 3.21.2  |
+
+### Nextclade Tags Used
+
+| Dataset        | Tag                   |
+| -------------- | --------------------- |
+| flu_h3n2_ha    | 2026-08-07--07-54-41Z |
+| flu_h1n1pdm_ha | 2026-04-14--11-55-23Z |
+| flu_vic_ha     | 2026-04-14--11-55-23Z |
+| flu_h3n2_na    | 2026-08-07--07-54-41Z |
+| flu_h1n1pdm_na | 2026-04-14--11-55-23Z |
+| flu_vic_na     | 2026-04-14--11-55-23Z |
+| rsv_a          | 2026-04-14--11-55-23Z |
+| rsv_b          | 2026-04-14--11-55-23Z |
+| sars-cov-2     | 2026-06-16--14-30-45Z |
+
+### `Fixed`
+
+- [PR #187](https://github.com/CDCgov/Mira-nf/pull/187) - switch to explicitly specifying 6 output files when calling DAIS-ribosome
+
 ## v2.2.1 - 08.11.2026
 
 - [Amanda Sullivan](https://github.com/mandysulli)
@@ -43,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to mira-oxide v1.5.10 to fix the subtype changes from new dais-ribosome output
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to dais-ribsome to v2.1.0 to fix bvic alignment changes from new dais-ribosome
 - [PR #185](https://github.com/CDCgov/MIRA-NF/pull/185) - bump the nextclade tag for h3n2
-- [PR #187](https://github.com/CDCgov/MIRA-NF/pull/187) - update fastqc and mutliqc containers
+- [PR #186](https://github.com/CDCgov/MIRA-NF/pull/186) - update fastqc and mutliqc containers
 
 ## v2.2.0 - 07.24.2026
 
