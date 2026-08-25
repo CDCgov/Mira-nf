@@ -28,7 +28,7 @@ process PREPAREMIRAREPORTS {
 
     script:
     def args = task.ext.args ?: ''
-    def parquet_args = params.parquet_files ? '-f' : ''
+    def tables_args = params.parquet_files ? '--tables csv,json,parq' : '--tables csv,json'
     def summary_csv_passing = params.nextclade ? 'cat mira_*_summary.csv > mira_summary_csv' : ''
     def summary_html_passing = params.nextclade ? 'cat mira_*_summary.html > mira_summary_html' : ''
 
@@ -53,7 +53,10 @@ process PREPAREMIRAREPORTS {
         -t "${qc_setting}" \\
         -r ${runid} \\
         -o ./ \\
-        ${parquet_args} \\
+        --fasta \\
+        --figures json \\
+        --html-summary \\
+        ${tables_args} \\
         ${args}
 
     ${summary_csv_passing}
