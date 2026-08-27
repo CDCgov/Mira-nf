@@ -100,6 +100,10 @@
                     "type": "boolean",
                     "description": "When set to true, this flag creates parquet files. Default: false"
                 },
+                "keep_workdir": {
+                    "type": "boolean",
+                    "description": "When set to true, preserve the Nextflow work directory after a successful run instead of cleaning it up. Default: false"
+                },
                 "amd_platform": {
                     "type": "boolean",
                     "default": false,
