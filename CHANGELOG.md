@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - new dais-ribosome outputs for the flu, sc2 and rsv references.
+- Added the `ANNOTATEMINORVARIANTS` process, which annotates the influenza minor variants table with codon/amino-acid context via `mira-oxide variants --minor-variants --annotate-minor-variants`.
 
 ### `Dependencies`
 

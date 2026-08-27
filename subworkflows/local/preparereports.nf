@@ -5,6 +5,7 @@
 */
 
 include { PREPAREMIRAREPORTS } from '../../modules/local/preparemirareports'
+include { ANNOTATEMINORVARIANTS } from '../../modules/local/annotateminorvariants'
 
 workflow PREPAREREPORTS {
 
@@ -101,6 +102,12 @@ workflow PREPAREREPORTS {
         summary_csv_ch = PREPAREMIRAREPORTS.out.summary_csv
         summary_html_ch = PREPAREMIRAREPORTS.out.summary_html
         nextclade_fasta_files_ch = PREPAREMIRAREPORTS.out.nextclade_fasta_files
+
+        // MODULE: Annotate the minor variants table with codon/amino-acid context (influenza only)
+        if (virus == 'flu') {
+            ANNOTATEMINORVARIANTS(dais_outputs_ch, PREPAREMIRAREPORTS.out.minor_variants_csv, runid)
+            ch_versions = ch_versions.mix(ANNOTATEMINORVARIANTS.out.versions)
+        }
 
     emit:
         ch_versions // channel: [ versions.yml ]

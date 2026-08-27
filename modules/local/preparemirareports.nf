@@ -21,6 +21,7 @@ process PREPAREMIRAREPORTS {
     path('mira_summary_html', emit: summary_html, optional: true)
     path('*.parq', emit: parquet_files, optional: true)
     path('nextclade_*.fasta', emit: nextclade_fasta_files, optional: true)
+    path('*minor_variants.csv', emit: minor_variants_csv, optional: true)
     path 'versions.yml', emit: versions
 
     when:
