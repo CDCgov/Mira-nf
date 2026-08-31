@@ -110,13 +110,20 @@ ENV PROJECT_DIR=/MIRA-NF
 # Copy project files
 COPY . ${PROJECT_DIR}
 
+# mira-oxide image baked into the sandbox below. Defaults to the pinned release so the release
+# image is unchanged; the dev image build overrides this to ghcr.io/cdcgov/mira-oxide:dev so
+# MIRA-NF dev ships the dev mira-oxide binary. The sandbox DIRECTORY name is kept stable
+# (conf/container.config binds it by that exact path) and is intentionally decoupled from the
+# actual image tag this ARG selects.
+ARG MIRA_OXIDE_IMAGE=ghcr.io/cdcgov/mira-oxide:v1.5.10
+
 # Pull Singularity images and convert to sandboxes
 RUN mkdir -p ${PROJECT_DIR}/sandboxes \
     && chmod -R 777 ${PROJECT_DIR}/sandboxes \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-dais-ribosome-v2.1.0     docker://cdcgov/dais-ribosome:v2.1.0 \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-irma-v1.3.5               docker://cdcgov/irma:v1.3.5 \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/ghcr.io-cdcgov-irma-core-v0.10.1  docker://ghcr.io/cdcgov/irma-core:v0.10.1 \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-mira-oxide-v1.5.10         docker://ghcr.io/cdcgov/mira-oxide:v1.5.10 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-mira-oxide-v1.5.10         docker://${MIRA_OXIDE_IMAGE} \
     && singularity build --sandbox ${PROJECT_DIR}/sandboxes/nextstrain-nextclade-3.21.2       docker://nextstrain/nextclade:3.21.2 \
     && chmod -R 777 ${PROJECT_DIR}/sandboxes
 

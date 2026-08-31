@@ -57,6 +57,10 @@ jobs:
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.description=mira-nf dev image
+          # Bake the dev mira-oxide binary (release default is pinned in the Dockerfile) so the
+          # dev pipeline image ships dev mira-oxide.
+          build-args: |
+            MIRA_OXIDE_IMAGE=ghcr.io/cdcgov/mira-oxide:dev
           provenance: false
           cache-from: type=gha,scope=dev
           cache-to: type=gha,mode=max,scope=dev
