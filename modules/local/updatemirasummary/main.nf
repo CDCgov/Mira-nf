@@ -2,7 +2,7 @@ process UPDATEMIRASUMMARY {
 
     label 'process_single'
 
-    container 'cdcgov/mira-oxide:v1.5.10'
+    container 'cdcgov/mira-oxide:v1.6.0'
 
     input:
     path summary_csv
