@@ -1,7 +1,7 @@
 process ANNOTATEMINORVARIANTS {
     label 'process_low'
 
-    container 'cdcgov/mira-oxide:v1.5.10'
+    container 'cdcgov/mira-oxide:v1.6.0'
 
     input:
     path dais_outputs
@@ -19,17 +19,11 @@ process ANNOTATEMINORVARIANTS {
     def args = task.ext.args ?: ''
 
     """
-    # Concatenate the per-sample DAIS-ribosome outputs so the annotator can look up
-    # codon/amino-acid context for every sample in the aggregated minor variants table.
-    # The gene-level indel files (.gen.ins/.gen.del) use a different schema and are excluded.
-    find . -maxdepth 1 -name '*.seq' ! -name 'combined_*' -exec cat {} + > combined_dais.seq
-    find . -maxdepth 1 -name '*.ins' ! -name '*.gen.ins' ! -name 'combined_*' -exec cat {} + > combined_dais.ins
-    find . -maxdepth 1 -name '*.del' ! -name '*.gen.del' ! -name 'combined_*' -exec cat {} + > combined_dais.del
 
     mira-oxide variants \\
-        --query-dais-file combined_dais.seq \\
-        --query-insertion-file combined_dais.ins \\
-        --query-deletion-file combined_dais.del \\
+        --query-dais-file DAIS_ribosome.seq \\
+        --query-insertion-file DAIS_ribosome.ins \\
+        --query-deletion-file DAIS_ribosome.del \\
         --minor-variants ${minor_variants_csv} \\
         --annotate-minor-variants \\
         --output-xsv mira_${runid}_annotated_minor_variants.csv \\
