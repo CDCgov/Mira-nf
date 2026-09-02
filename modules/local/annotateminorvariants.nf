@@ -1,7 +1,7 @@
 process ANNOTATEMINORVARIANTS {
     label 'process_low'
 
-    container 'cdcgov/mira-oxide:v1.6.10'
+    container 'cdcgov/mira-oxide:v1.6.'
 
     input:
     path dais_outputs

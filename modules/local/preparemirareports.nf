@@ -1,7 +1,7 @@
 process PREPAREMIRAREPORTS {
     label 'process_medium'
 
-    container 'cdcgov/mira-oxide:v1.5.10'
+    container 'cdcgov/mira-oxide:v1.6.0'
 
     input:
     path dais_outputs
@@ -29,7 +29,6 @@ process PREPAREMIRAREPORTS {
 
     script:
     def args = task.ext.args ?: ''
-    def tables_args = params.parquet_files ? '--tables csv,json,parq' : '--tables csv,json'
     def summary_csv_passing = params.nextclade ? 'cat mira_*_summary.csv > mira_summary_csv' : ''
     def summary_html_passing = params.nextclade ? 'cat mira_*_summary.html > mira_summary_html' : ''
 
@@ -54,10 +53,6 @@ process PREPAREMIRAREPORTS {
         -t "${qc_setting}" \\
         -r ${runid} \\
         -o ./ \\
-        --fasta \\
-        --figures json \\
-        --html-summary \\
-        ${tables_args} \\
         ${args}
 
     ${summary_csv_passing}
