@@ -1588,54 +1588,52 @@ if (params.email) {
     def basename = folder_name.name
     def ac_file = new File("${params.outdir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta")
 
-    if (ac_file.exists()) {
-        def final_files = [
-            "${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv",
-            "${params.outdir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta"
-        ]
-        def msg = """
-        Pipeline execution summary
-        Completed at: ${workflow.complete}
-        Duration    : ${workflow.duration}
-        Success     : ${workflow.success}
-        workDir     : ${workflow.workDir}
-        outDir      : ${params.outdir}
-        exit status : ${workflow.exitStatus}
-        ${fileContent}
-        """
-        .stripIndent()
-
-        sendMail(
-            to: params.email,
-            from: 'mira-nf@mail.biotech.cdc.gov',
-            subject: 'MIRA-NF pipeline execution',
-            body: msg,
-            attach: final_files
-        )
-    } else {
-        def final_files = [
-            "${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv"
-        ]
-        def msg = """
-        Pipeline execution summary
-        Completed at: ${workflow.complete}
-        Duration    : ${workflow.duration}
-        Success     : ${workflow.success}
-        workDir     : ${workflow.workDir}
-        outDir      : ${params.outdir}
-        exit status : ${workflow.exitStatus}
-        No amended consensus was created!
-        """
-        .stripIndent()
-
-        sendMail(
-            to: params.email,
-            from: 'mira-nf@mail.biotech.cdc.gov',
-            subject: 'MIRA-NF pipeline execution',
-            body: msg,
-            attach: final_files
-        )
+    // Attach in priority order, skipping anything that would push the payload to the 10 MB
+    // mail-gateway limit. Not every file exists on every experiment type.
+    def max_attach_bytes = 10 * 1024 * 1024
+    def candidates = [
+        new File("${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv"),
+        ac_file,
+        new File("${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_annotated_minor_variants.csv")
+    ]
+    def final_files = []
+    def omitted = []
+    def attached_bytes = 0L
+    candidates.each { f ->
+        if (!f.exists()) {
+            return
+        }
+        if (attached_bytes + f.length() >= max_attach_bytes) {
+            omitted << f.name
+            return
+        }
+        final_files << f.toString()
+        attached_bytes += f.length()
     }
+
+    def msg = """
+    Pipeline execution summary
+    Completed at: ${workflow.complete}
+    Duration    : ${workflow.duration}
+    Success     : ${workflow.success}
+    workDir     : ${workflow.workDir}
+    outDir      : ${params.outdir}
+    exit status : ${workflow.exitStatus}
+    ${ac_file.exists() ? fileContent : 'No amended consensus was created!'}
+    ${omitted ? "Not attached (would exceed the ${max_attach_bytes.intdiv(1024 * 1024)} MB email limit): ${omitted.join(', ')}" : ''}
+    """
+    .stripIndent()
+
+    def mail_args = [
+        to: params.email,
+        from: 'mira-nf@mail.biotech.cdc.gov',
+        subject: 'MIRA-NF pipeline execution',
+        body: msg
+    ]
+    if (final_files) {
+        mail_args.attach = final_files
+    }
+    sendMail(mail_args)
 } else if (params.e == 'Find-Variants-Of-Interest' || params.e == 'Find-Positions-Of-Interest') {
     def versionPath = "${params.outdir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
