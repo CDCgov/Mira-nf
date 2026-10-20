@@ -1,7 +1,6 @@
 process PREPAREMIRAREPORTS {
     label 'process_medium'
-
-    container 'ghcr.io/cdcgov/mira-oxide:dev'
+    label 'mira_oxide'
 
     input:
     path dais_outputs

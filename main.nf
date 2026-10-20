@@ -15,7 +15,7 @@
 
 
 if (params.version) {
-    println "Mira-nf v2.2.0"
+    println "Mira-nf v${workflow.manifest.version}"
     System.exit(0)
 }
 

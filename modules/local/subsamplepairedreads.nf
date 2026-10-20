@@ -1,8 +1,7 @@
 process SUBSAMPLEPAIREDREADS {
     tag "${sample}"
     label 'process_medium'
-
-    container 'ghcr.io/cdcgov/irma-core:v0.10.1'
+    label 'irma_core'
 
     input:
     tuple val(sample), path(R1), path(R2), val(target), path(primers), val(primer_kmer_len), val(primer_restrict_window)

@@ -1494,7 +1494,13 @@ workflow MIRA {
         support_file_path = Channel.fromPath(params.sourcepath, checkIfExists: true)
     }
 
-    println '''
+    // Taken from the image tags so the banner cannot drift from the *_image params.
+    def imageVersion = { img ->
+        def p = img.tokenize('/').last().tokenize(':')
+        (p.size() > 1 ? p[1] : 'latest').replaceFirst(/^v(?=\d)/, '').padRight(8)
+    }
+
+    println """
     ############################################################################
                             .      .         !!!         |
                  )))       .  .:::.       `  _ _  '      |.===.
@@ -1503,12 +1509,12 @@ workflow MIRA {
 
                         | Program       | Version |
                         |---------------|---------|
-                        | Mira-nf       | 2.2.1   |
-                        | irma-core     | 0.10.1  |
-                        | IRMA          | 1.3.5   |
-                        | DAIS-ribosome | 2.1.0   |
-                        | mira-oxide    | 1.5.10   |
-                        | nextclade     | 3.21.2  |
+                        | Mira-nf       | ${workflow.manifest.version.padRight(8)}|
+                        | irma-core     | ${imageVersion(params.irma_core_image)}|
+                        | IRMA          | ${imageVersion(params.irma_image)}|
+                        | DAIS-ribosome | ${imageVersion(params.dais_ribosome_image)}|
+                        | mira-oxide    | ${imageVersion(params.mira_oxide_image)}|
+                        | nextclade     | ${imageVersion(params.nextclade_image)}|
     #############################################################################
     Typical pipeline command:
 
@@ -1516,7 +1522,7 @@ workflow MIRA {
 
     See README for all options
 
-    '''
+    """
 
     // Check MIRA version
     if ( !params.check_version ) {

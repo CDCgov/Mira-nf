@@ -1,7 +1,6 @@
 process DAISRIBOSOME {
     label 'process_medium'
-
-    container 'cdcgov/dais-ribosome:v2.1.0'
+    label 'dais_ribosome'
     // The container binding for this step has been moved to the modules if needed
 
     input:
@@ -19,6 +18,6 @@ process DAISRIBOSOME {
     dais_out="${base_name%_input*}"
     ribosome --module !{dais_module} !{input_fasta} ${dais_out}.seq ${dais_out}.ins ${dais_out}.del ${dais_out}.gen ${dais_out}.gen.ins ${dais_out}.gen.del
 
-    echo "!{task.process}: daisribosome: cdcgov/dais-ribosome:v2.1.0" > versions.yml
+    echo "!{task.process}: daisribosome: !{params.dais_ribosome_image}" > versions.yml
     '''
 }
