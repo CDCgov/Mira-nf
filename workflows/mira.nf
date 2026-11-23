@@ -1585,7 +1585,7 @@ if (params.email) {
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
     def path = "${params.runpath}"
     def folder_name = new File(path)
-    def basename = folder_name.name
+    def basename = params.custom_runid != null ? params.custom_runid : folder_name.name
     def ac_file = new File("${params.outdir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta")
 
     // Attach in priority order, skipping anything that would push the payload to the 10 MB
