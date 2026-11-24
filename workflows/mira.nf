@@ -172,7 +172,7 @@ workflow flu_i {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -180,7 +180,7 @@ workflow flu_i {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -361,7 +361,7 @@ workflow flu_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -369,7 +369,7 @@ workflow flu_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -550,7 +550,7 @@ workflow sc2_spike_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -558,7 +558,7 @@ workflow sc2_spike_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -706,7 +706,7 @@ workflow sc2_wgs_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -714,7 +714,7 @@ workflow sc2_wgs_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -910,7 +910,7 @@ workflow sc2_wgs_i {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -918,7 +918,7 @@ workflow sc2_wgs_i {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1112,7 +1112,7 @@ workflow rsv_i {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -1120,7 +1120,7 @@ workflow rsv_i {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1298,7 +1298,7 @@ workflow rsv_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -1306,7 +1306,7 @@ workflow rsv_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1486,18 +1486,18 @@ workflow find_positions_of_int {
 }
 // MAIN WORKFLOW
 
+// Taken from the image tags so the banner cannot drift from the *_image params.
+def imageVersion(img) {
+    def p = img.tokenize('/').last().tokenize(':')
+    return (p.size() > 1 ? p[1] : 'latest').replaceFirst(/^v(?=\d)/, '').padRight(8)
+}
+
 workflow MIRA {
     //If sourcepath flag is given, then it will use the sourcepath to point to the support files
     if (params.sourcepath == null) {
         support_file_path = Channel.fromPath(projectDir, checkIfExists: true)
     } else {
         support_file_path = Channel.fromPath(params.sourcepath, checkIfExists: true)
-    }
-
-    // Taken from the image tags so the banner cannot drift from the *_image params.
-    def imageVersion = { img ->
-        def p = img.tokenize('/').last().tokenize(':')
-        (p.size() > 1 ? p[1] : 'latest').replaceFirst(/^v(?=\d)/, '').padRight(8)
     }
 
     println """
