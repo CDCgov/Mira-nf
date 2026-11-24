@@ -1571,18 +1571,17 @@ workflow MIRA {
        find_positions_of_int()
     }
 
-    registerCompletionHandlers()
-}
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     COMPLETION EMAIL AND SUMMARY
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-def registerCompletionHandlers() {
+    def workflow_meta = workflow
+
     if (params.email) {
     workflow.onComplete {
-        if (workflow.success == true) {
+        if (workflow_meta.success == true) {
             if (params.e != 'Find-Variants-Of-Interest' && params.e != 'Find-Positions-Of-Interest') {
     def versionPath = "${params.outdir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
@@ -1616,12 +1615,12 @@ def registerCompletionHandlers() {
 
     def msg = """
     Pipeline execution summary
-    Completed at: ${workflow.complete}
-    Duration    : ${workflow.duration}
-    Success     : ${workflow.success}
-    workDir     : ${workflow.workDir}
+    Completed at: ${workflow_meta.complete}
+    Duration    : ${workflow_meta.duration}
+    Success     : ${workflow_meta.success}
+    workDir     : ${workflow_meta.workDir}
     outDir      : ${params.outdir}
-    exit status : ${workflow.exitStatus}
+    exit status : ${workflow_meta.exitStatus}
     ${ac_file.exists() ? fileContent : 'No amended consensus was created!'}
     ${omitted ? "Not attached (would exceed the ${max_attach_bytes.intdiv(1024 * 1024)} MB email limit): ${omitted.join(', ')}" : ''}
     """
@@ -1642,12 +1641,12 @@ def registerCompletionHandlers() {
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
     def msg = """
     Pipeline execution summary
-    Completed at: ${workflow.complete}
-    Duration    : ${workflow.duration}
-    Success     : ${workflow.success}
-    workDir     : ${workflow.workDir}
+    Completed at: ${workflow_meta.complete}
+    Duration    : ${workflow_meta.duration}
+    Success     : ${workflow_meta.success}
+    workDir     : ${workflow_meta.workDir}
     outDir      : ${params.outdir}
-    exit status : ${workflow.exitStatus}
+    exit status : ${workflow_meta.exitStatus}
     ${fileContent}
     Variants of interest workflow has run successfully.
     """
@@ -1660,15 +1659,15 @@ def registerCompletionHandlers() {
         body: msg
     )
 }
-        } else if (workflow.success == false) {
+        } else if (workflow_meta.success == false) {
             def msg = """
        Pipeline execution summary
-       Completed at: ${workflow.complete}
-       Duration    : ${workflow.duration}
-       Success     : ${workflow.success}
-       workDir     : ${workflow.workDir}
+       Completed at: ${workflow_meta.complete}
+       Duration    : ${workflow_meta.duration}
+       Success     : ${workflow_meta.success}
+       workDir     : ${workflow_meta.workDir}
        outDir      : ${params.outdir}
-       exit status : ${workflow.exitStatus}
+       exit status : ${workflow_meta.exitStatus}
        """
        .stripIndent()
 
@@ -1677,7 +1676,7 @@ def registerCompletionHandlers() {
     }
 
     workflow.onError {
-        if (workflow.errorReport.contains('Process requirement exceeds available memory')) {
+        if (workflow_meta.errorReport?.contains('Process requirement exceeds available memory')) {
             println('🛑 Default resources exceed availability 🛑 ')
             println('💡 See here on how to configure pipeline: https://nf-co.re/docs/usage/configuration#tuning-workflow-resources 💡')
         }
