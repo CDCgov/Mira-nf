@@ -1578,25 +1578,30 @@ workflow MIRA {
 */
 
     def workflow_meta = workflow
+    def email_address = params.email
+    def experiment_type = params.e
+    def output_dir = params.outdir
+    def run_path = params.runpath
+    def custom_run_id = params.custom_runid
 
-    if (params.email) {
+    if (email_address) {
     workflow.onComplete {
         if (workflow_meta.success == true) {
-            if (params.e != 'Find-Variants-Of-Interest' && params.e != 'Find-Positions-Of-Interest') {
-    def versionPath = "${params.outdir}/pipeline_info/mira_version_check.txt"
+            if (experiment_type != 'Find-Variants-Of-Interest' && experiment_type != 'Find-Positions-Of-Interest') {
+    def versionPath = "${output_dir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
-    def path = "${params.runpath}"
+    def path = "${run_path}"
     def folder_name = new File(path)
-    def basename = params.custom_runid != null ? params.custom_runid : folder_name.name
-    def ac_file = new File("${params.outdir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta")
+    def basename = custom_run_id != null ? custom_run_id : folder_name.name
+    def ac_file = new File("${output_dir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta")
 
     // Attach in priority order, skipping anything that would push the payload to the 10 MB
     // mail-gateway limit. Not every file exists on every experiment type.
     def max_attach_bytes = 10 * 1024 * 1024
     def candidates = [
-        new File("${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv"),
+        new File("${output_dir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv"),
         ac_file,
-        new File("${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_annotated_minor_variants.csv")
+        new File("${output_dir}/aggregate_outputs/csv-reports/mira_${basename}_annotated_minor_variants.csv")
     ]
     def final_files = []
     def omitted = []
@@ -1619,7 +1624,7 @@ workflow MIRA {
     Duration    : ${workflow_meta.duration}
     Success     : ${workflow_meta.success}
     workDir     : ${workflow_meta.workDir}
-    outDir      : ${params.outdir}
+    outDir      : ${output_dir}
     exit status : ${workflow_meta.exitStatus}
     ${ac_file.exists() ? fileContent : 'No amended consensus was created!'}
     ${omitted ? "Not attached (would exceed the ${max_attach_bytes.intdiv(1024 * 1024)} MB email limit): ${omitted.join(', ')}" : ''}
@@ -1627,7 +1632,7 @@ workflow MIRA {
     .stripIndent()
 
     def mail_args = [
-        to: params.email,
+        to: email_address,
         from: 'mira-nf@mail.biotech.cdc.gov',
         subject: 'MIRA-NF pipeline execution',
         body: msg
@@ -1636,8 +1641,8 @@ workflow MIRA {
         mail_args.attach = final_files
     }
     sendMail(mail_args)
-} else if (params.e == 'Find-Variants-Of-Interest' || params.e == 'Find-Positions-Of-Interest') {
-    def versionPath = "${params.outdir}/pipeline_info/mira_version_check.txt"
+} else if (experiment_type == 'Find-Variants-Of-Interest' || experiment_type == 'Find-Positions-Of-Interest') {
+    def versionPath = "${output_dir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
     def msg = """
     Pipeline execution summary
@@ -1645,7 +1650,7 @@ workflow MIRA {
     Duration    : ${workflow_meta.duration}
     Success     : ${workflow_meta.success}
     workDir     : ${workflow_meta.workDir}
-    outDir      : ${params.outdir}
+    outDir      : ${output_dir}
     exit status : ${workflow_meta.exitStatus}
     ${fileContent}
     Variants of interest workflow has run successfully.
@@ -1653,7 +1658,7 @@ workflow MIRA {
     .stripIndent()
 
     sendMail(
-        to: params.email,
+        to: email_address,
         from: 'mira-nf@mail.biotech.cdc.gov',
         subject: 'MIRA-NF pipeline execution',
         body: msg
@@ -1666,12 +1671,12 @@ workflow MIRA {
        Duration    : ${workflow_meta.duration}
        Success     : ${workflow_meta.success}
        workDir     : ${workflow_meta.workDir}
-       outDir      : ${params.outdir}
+       outDir      : ${output_dir}
        exit status : ${workflow_meta.exitStatus}
        """
        .stripIndent()
 
-            sendMail(to: params.email, from:'mira-nf@mail.biotech.cdc.gov', subject: 'MIRA-NF pipeline execution', body:msg)
+            sendMail(to: email_address, from:'mira-nf@mail.biotech.cdc.gov', subject: 'MIRA-NF pipeline execution', body:msg)
         }
     }
 
