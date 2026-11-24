@@ -13,7 +13,7 @@ ENV python_version=${python_version:-python3.10}
 
 # Create environment variable to get specific version of fastqc
 ARG multiqc_version
-ENV multiqc_version=${multiqc_version:-1.19}
+ENV multiqc_version=${multiqc_version:-1.21}
 
 # Required certs for apk update
 COPY ca.crt /root/ca.crt

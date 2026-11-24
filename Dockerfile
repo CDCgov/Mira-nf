@@ -29,7 +29,7 @@ RUN cat /usr/local/share/ca-certificates/min-cdc-bundle-ca.crt >> /etc/ssl/certs
 
 ############# Install Singularity with GO ##################
 # This has to be the most up to date version or it will fail
-ENV GO_VERSION=1.26.1
+ENV GO_VERSION=1.26.4
 ENV SINGULARITY_VERSION=4.4.0
 
 RUN curl -L https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tgz \
