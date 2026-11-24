@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | mira-oxide    | 1.x.x   |
 | nextclade     | 3.21.2  |
 
+### Added
+
+- Added functionality in `NEXTFLOWSAMPLESHEET` module to skip the 1-minute sleep
+  if the pipeline is being run locally (task executor is not SGE or slurm)
+
 ## v2.2.2 - 09.11.2026
 
 - [William Chettleburgh](https://github.com/willchet)
