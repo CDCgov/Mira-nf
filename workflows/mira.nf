@@ -1570,6 +1570,8 @@ workflow MIRA {
     } else if (params.e == 'Find-Positions-Of-Interest') {
        find_positions_of_int()
     }
+
+    registerCompletionHandlers()
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1577,7 +1579,8 @@ workflow MIRA {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-if (params.email) {
+def registerCompletionHandlers() {
+    if (params.email) {
     workflow.onComplete {
         if (workflow.success == true) {
             if (params.e != 'Find-Variants-Of-Interest' && params.e != 'Find-Positions-Of-Interest') {
@@ -1679,6 +1682,7 @@ if (params.email) {
             println('💡 See here on how to configure pipeline: https://nf-co.re/docs/usage/configuration#tuning-workflow-resources 💡')
         }
     }
+}
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
