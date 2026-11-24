@@ -30,7 +30,7 @@ MIRA-NF performs these steps for genome assembly and curation:
 8. Collect results from IRMA and DAIS-Ribosome to create Mira reoprts (JSON, HTML, FASTA, CSV and optional PARQ files)([`mira-oxide`](https://github.com/CDCgov/mira-oxide))
 9. Nextclade (optional)([`Nextclade`](https://github.com/nextstrain/nextclade))
 
-#### MIRA-NF is able to analyze 7 data types:
+## MIRA-NF is able to analyze 7 data types
 
 |                            | Illumina | ONT |
 | -------------------------- | -------- | --- |
@@ -232,11 +232,11 @@ Note that pipeline parameters can be provided via the NF or Nextflow `-params-fi
 
 1. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-2. Pull the mira-nf:v2.1.0 image
+2. Pull the mira-nf:v2.2.0 image
 
-`docker pull cdcgov/mira-nf:v2.1.0`
+`docker pull cdcgov/mira-nf:v2.2.0`
 
-3. Run the Mira-nf container:
+1. Run the Mira-nf container:
 
    a. **Interactively:**
 
@@ -256,7 +256,7 @@ Note that pipeline parameters can be provided via the NF or Nextflow `-params-fi
    docker run -v <workdir_path>:/data cdcgov/mira-nf:v2.1.0 nextflow run /MIRA-NF/main.nf -profile mira_nf_container --input <RUNPATH>/samplesheet.csv --runpath <RUNPATH>  --outdir <OUTDIR> --e <EXPERIMENT_TYPE> --p <PRIMER_SCHEMA> (optional) --parquet_files true (optional) --nextclade true (optional) --subsample_reads <READ_COUNT> (optional) --check_version true (optional)
    ```
 
-### NOTES:
+### NOTES
 
 - If you are running in the terminal (non-interactively) with a mounted data path, you will use `/data/` in place of the <work_path> you provided`
 - Some set ups may require you to use `sudo`,`--privileged` or both to run with proper permission
