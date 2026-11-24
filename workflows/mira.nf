@@ -293,7 +293,7 @@ workflow flu_o {
             def barcode = item.barcode
             def sample_id = item.sample_id
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -483,7 +483,7 @@ workflow sc2_spike_o {
             def sample_id = item.sample_id
             // def fastq_path = "${params.runpath}/**/${barcode}/*.fastq.gz"; // it was not working with **, so I changed it to fastq_pass
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -638,7 +638,7 @@ workflow sc2_wgs_o {
             def barcode = item.barcode
             def sample_id = item.sample_id
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -1230,7 +1230,7 @@ workflow rsv_o {
             def barcode = item.barcode
             def sample_id = item.sample_id
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
