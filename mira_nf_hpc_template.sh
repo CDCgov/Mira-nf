@@ -13,7 +13,7 @@
 #$ -V
 
 #Load nextflow module
-module load nextflow/25.10.4
+module load nextflow/26.04.4
 
 ##Abosolute file paths are needed to run the pipeline
 # Run nextflow
