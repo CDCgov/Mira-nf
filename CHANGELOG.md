@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Amanda Sullivan](https://github.com/mandysulli)
 - [Sam Wiley](https://github.com/samcwiley)
+- [William Chettleburgh](https://github.com/willchet)
 
 ### Associated Tags
 
@@ -15,41 +16,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | irma-core     | 0.12.1  |
 | IRMA          | 1.4.0   |
 | DAIS-ribosome | 2.2.0   |
-| mira-oxide    | 1.x.x   |
-| nextclade     | 3.21.2  |
+| mira-oxide    | 1.6.1   |
+| nextclade     | 3.30.0  |
 
 ### Added
 
-- Added functionality in `NEXTFLOWSAMPLESHEET` module to skip the 1-minute sleep
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added new utility workflow flags: `--all-diffs`, `--positions-of-interest`, `--reference_seq_fasta`, and `--variants_table` to support refined variant analysis workflows
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added `ALLDIFFS` module configuration to all execution profiles (modules.config, modules_arm64.config, modules_docker.config, modules_docker_arm64.config, modules_podman.config, modules_podman_arm64.config)
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added support for running find_positions_of_interest workflow via command-line with new flag structure
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Updated `MIRA_nextflow.sh` script to support new flags with proper command-line parsing and argument passing
+
+### Changed
+- [PR #194](https://github.com/CDCgov/Mira-nf/pull/194) - Added functionality in `NEXTFLOWSAMPLESHEET` module to skip the 1-minute sleep
   if the pipeline is being run locally (task executor is not SGE or slurm)
 
-## v2.2.2 - 09.11.2026
-
-- [William Chettleburgh](https://github.com/willchet)
-
-### Associated Tags
-
-| Program       | Version |
-| ------------- | ------- |
-| irma-core     | 0.10.1  |
-| IRMA          | 1.3.5   |
-| DAIS-ribosome | 2.1.0   |
-| mira-oxide    | 1.5.10  |
-| nextclade     | 3.21.2  |
-
-### Nextclade Tags Used
-
-| Dataset        | Tag                   |
-| -------------- | --------------------- |
-| flu_h3n2_ha    | 2026-08-07--07-54-41Z |
-| flu_h1n1pdm_ha | 2026-04-14--11-55-23Z |
-| flu_vic_ha     | 2026-04-14--11-55-23Z |
-| flu_h3n2_na    | 2026-08-07--07-54-41Z |
-| flu_h1n1pdm_na | 2026-04-14--11-55-23Z |
-| flu_vic_na     | 2026-04-14--11-55-23Z |
-| rsv_a          | 2026-04-14--11-55-23Z |
-| rsv_b          | 2026-04-14--11-55-23Z |
-| sars-cov-2     | 2026-06-16--14-30-45Z |
+  
+### `Deprecated`
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - deprecated `--reference_seq_table` and `--variants_of_interest` flags in favor of new clearer naming scheme (`--reference_seq_fasta`, `--variants_table`)
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Removed `VARIANTSOFINT` module configuration from all execution profiles (no longer used)
 
 ### `Fixed`
 
