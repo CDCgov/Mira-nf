@@ -1005,6 +1005,10 @@ workflow rsv_i {
     }
     CHECKIRMA(check_irma_ch)
 
+    // MODULE: Run Dais Ribosome
+    DAISRIBOSOME(CHECKIRMA.out.dais_ch, PREPILLUMINAREADS.out.dais_module)
+    ch_versions = ch_versions.unique().mix(DAISRIBOSOME.out.versions)
+
     // SUBWORKFLOW: Create reports
     PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
