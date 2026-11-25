@@ -13,11 +13,11 @@
 #$ -V
 
 #Load nextflow module
-module load nextflow/24.10.4
+module load nextflow/26.04.4
 
 ##Abosolute file paths are needed to run the pipeline
 # Run nextflow
-nextflow run <WORKDIR>/MIRA-NF/main.nf \
+nextflow run <WORKDIR>/Mira-nf/main.nf \
    -profile singularity,sge \
    --input <RUN_PATH>/samplesheet.csv \
    --outdir <OUTDIR_PATH>/mira-outputs  \

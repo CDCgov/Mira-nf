@@ -10,14 +10,14 @@
 #$ -V
 
 usage() {
-    echo -e "Usage in git cloned CLI: \n bash $0 -d <pth_to_mira_nf> -i <path_to_samplesheet.csv> -o <outdir> -r <run_id> -e <experiment_type> -f <nextflow_profiles> <optional: -p amplicon_library> <optional: -g custom_primers> <optional: -t kmer_for_custom_primers> <optional: -u restrict_window_for_custom_primers> <optional: -a parquet_files> <optional: -c read_counts> <optional: -q processing_q> <optional: -m email_address> <optional: -b irma_module> <optional: -k read_qc> <optional: -r runid> <optional: -n run_nextclade> " 1>&2
+    echo -e "Usage in git cloned CLI: \n bash $0 -d <pth_to_mira_nf> -i <path_to_samplesheet.csv> -o <outdir> -r <run_id> -e <experiment_type> -f <nextflow_profiles> <optional: -p amplicon_library> <optional: -g custom_primers> <optional: -t kmer_for_custom_primers> <optional: -u restrict_window_for_custom_primers> <optional: -a parquet_files> <optional: -c read_counts> <optional: -q processing_q> <optional: -m email_address> <optional: -b irma_module> <optional: -k read_qc> <optional: -r runid> <optional: -n run_nextclade> <optional: -l all_diffs> <optional: -s positions_of_interest> <optional: -x reference_seq_fasta> <optional: -y variants_table> " 1>&2
     exit 1
 }
 
 # Experiment type options: Flu-ONT, SC2-Spike-Only-ONT, Flu_Illumina, SC2-Whole-Genome-ONT, SC2-Whole-Genome-Illumina
 # Primer Schema options: articv3, articv4, articv4.1, articv5.3.2, qiagen, swift, swift_211206
 
-while getopts 'd:i:o:r:e:p:g:t:u:f:a:c:n:q:m:b:k:h:na' OPTION; do
+while getopts 'd:i:o:r:e:p:g:t:u:f:a:c:n:q:m:b:k:h:l:s:x:y:na' OPTION; do
     case "$OPTION" in
     d) DIRNAME="$OPTARG" ;;
     i) INPUT="$OPTARG" ;;
@@ -37,6 +37,10 @@ while getopts 'd:i:o:r:e:p:g:t:u:f:a:c:n:q:m:b:k:h:na' OPTION; do
     k) READS_QC="$OPTARG" ;;
     h) CUSTOMRUNID="$OPTARG" ;;
     n) NEXTCLADE="$OPTARG" ;;
+    l) ALL_DIFFS="$OPTARG" ;;
+    s) POSITIONS_OF_INTEREST="$OPTARG" ;;
+    x) REFERENCE_SEQ_FASTA="$OPTARG" ;;
+    y) VARIANTS_TABLE="$OPTARG" ;;
     *) usage ;;
     esac
 done
@@ -113,6 +117,30 @@ else
     OPTIONALARGS11="--nextclade $NEXTCLADE"
 fi
 
+if [[ -z "${ALL_DIFFS}" ]]; then
+    OPTIONALARGS12=""
+else
+    OPTIONALARGS12="--all_diffs $ALL_DIFFS"
+fi
+
+if [[ -z "${POSITIONS_OF_INTEREST}" ]]; then
+    OPTIONALARGS13=""
+else
+    OPTIONALARGS13="--positions_of_interest $POSITIONS_OF_INTEREST"
+fi
+
+if [[ -z "${REFERENCE_SEQ_FASTA}" ]]; then
+    OPTIONALARGS14=""
+else
+    OPTIONALARGS14="--reference_seq_fasta $REFERENCE_SEQ_FASTA"
+fi
+
+if [[ -z "${VARIANTS_TABLE}" ]]; then
+    OPTIONALARGS15=""
+else
+    OPTIONALARGS15="--variants_table $VARIANTS_TABLE"
+fi
+
 # Run nextflow
 module load nextflow/25.10.4
 nextflow run "$DIRNAME"/Mira-nf/main.nf \
@@ -132,4 +160,8 @@ nextflow run "$DIRNAME"/Mira-nf/main.nf \
     $OPTIONALARGS8 \
     $OPTIONALARGS9 \
     $OPTIONALARGS10 \
-    $OPTIONALARGS11
+    $OPTIONALARGS11 \
+    $OPTIONALARGS12 \
+    $OPTIONALARGS13 \
+    $OPTIONALARGS14 \
+    $OPTIONALARGS15

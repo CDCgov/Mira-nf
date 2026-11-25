@@ -29,7 +29,7 @@ RUN cat /usr/local/share/ca-certificates/min-cdc-bundle-ca.crt >> /etc/ssl/certs
 
 ############# Install Singularity with GO ##################
 # This has to be the most up to date version or it will fail
-ENV GO_VERSION=1.26.1
+ENV GO_VERSION=1.26.4
 ENV SINGULARITY_VERSION=4.4.0
 
 RUN curl -L https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tgz \
@@ -110,14 +110,24 @@ ENV PROJECT_DIR=/MIRA-NF
 # Copy project files
 COPY . ${PROJECT_DIR}
 
+# Tool images baked into the sandboxes below. These defaults must match the *_image params in
+# nextflow.config, which is the single source of truth for every other profile. The dev image
+# build overrides MIRA_OXIDE_IMAGE with ghcr.io/cdcgov/mira-oxide:dev. Sandbox DIRECTORY names
+# are deliberately unversioned so conf/container.config never changes on a version bump.
+ARG MIRA_OXIDE_IMAGE=ghcr.io/cdcgov/mira-oxide:v1.6.1
+ARG IRMA_CORE_IMAGE=ghcr.io/cdcgov/irma-core:v0.12.1
+ARG IRMA_IMAGE=cdcgov/irma:v1.4.0
+ARG DAIS_RIBOSOME_IMAGE=cdcgov/dais-ribosome:v2.2.0
+ARG NEXTCLADE_IMAGE=nextstrain/nextclade:3.21.2
+
 # Pull Singularity images and convert to sandboxes
 RUN mkdir -p ${PROJECT_DIR}/sandboxes \
     && chmod -R 777 ${PROJECT_DIR}/sandboxes \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-dais-ribosome-v2.0.2     docker://cdcgov/dais-ribosome:v2.0.2 \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-irma-v1.3.5               docker://cdcgov/irma:v1.3.5 \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/ghcr.io-cdcgov-irma-core-v0.10.1  docker://ghcr.io/cdcgov/irma-core:v0.10.1 \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/cdcgov-mira-oxide-v1.5.9         docker://ghcr.io/cdcgov/mira-oxide:v1.5.9 \
-    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/nextstrain-nextclade-3.21.2       docker://nextstrain/nextclade:3.21.2 \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/dais-ribosome  docker://${DAIS_RIBOSOME_IMAGE} \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/irma           docker://${IRMA_IMAGE} \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/irma-core      docker://${IRMA_CORE_IMAGE} \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/mira-oxide     docker://${MIRA_OXIDE_IMAGE} \
+    && singularity build --sandbox ${PROJECT_DIR}/sandboxes/nextclade      docker://${NEXTCLADE_IMAGE} \
     && chmod -R 777 ${PROJECT_DIR}/sandboxes
 
 RUN rm -rf ${PROJECT_DIR}/fastqc \

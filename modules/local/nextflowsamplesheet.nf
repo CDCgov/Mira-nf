@@ -1,7 +1,6 @@
 process NEXTFLOWSAMPLESHEET {
     label 'process_single'
-
-    container 'cdcgov/mira-oxide:v1.5.10'
+    label 'mira_oxide'
 
     input:
     path samplesheet
@@ -18,12 +17,15 @@ process NEXTFLOWSAMPLESHEET {
 
     script:
     def args = task.ext.args ?: ''
+    // create-nextflow-samplesheet only needs the delay when jobs are submitted
+    // through a cluster scheduler. Local-executor runs can skip it.
+    def sleep_arg = ['sge', 'slurm'].contains(task.executor) ? '' : '--skip-sleep'
 
     """
     if [[ "${experiment_type}" == *"Illumina"* ]]; then
-        mira-oxide create-nextflow-samplesheet -s "${samplesheet}" -r "${fastq_files}" -e "${experiment_type}"
+        mira-oxide create-nextflow-samplesheet -s "${samplesheet}" -r "${fastq_files}" -e "${experiment_type}" ${sleep_arg}
     elif [[ "${experiment_type}" == *"ONT"* ]]; then
-        mira-oxide create-nextflow-samplesheet  -s "${samplesheet}" -r "${params.outdir}" -e "${experiment_type}"
+        mira-oxide create-nextflow-samplesheet -s "${samplesheet}" -r "${params.outdir}" -e "${experiment_type}" ${sleep_arg}
     fi
 
     cat <<-END_VERSIONS > versions.yml

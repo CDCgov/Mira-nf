@@ -223,7 +223,7 @@ Coverage figure created by IRMA
 
 - `aggregate_outputs/dais-ribosome/`
   - DAIS_ribosome_input.fasta - input fasta files that is used as the input for DAIS-ribosome
-  - DAIS_ribosome.in - file contains the insertion found in all the samples assembled by IRMA
+  - DAIS_ribosome.ins - file contains the insertion found in all the samples assembled by IRMA
   - DAIS_ribosome.del - file contains the deletions found in all the samples assembled by IRMA
   - DAIS_ribosome.seq - file contains sequence related data from all the samples assembled by IRMA
 

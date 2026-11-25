@@ -3,6 +3,43 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.3.0 - 2026-11-25
+
+- [Amanda Sullivan](https://github.com/mandysulli)
+- [Sam Wiley](https://github.com/samcwiley)
+- [William Chettleburgh](https://github.com/willchet)
+
+### Associated Tags
+
+| Program       | Version |
+| ------------- | ------- |
+| irma-core     | 0.12.1  |
+| IRMA          | 1.4.0   |
+| DAIS-ribosome | 2.2.0   |
+| mira-oxide    | 1.6.1   |
+| nextclade     | 3.30.0  |
+
+### Added
+
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added new utility workflow flags: `--all-diffs`, `--positions-of-interest`, `--reference_seq_fasta`, and `--variants_table` to support refined variant analysis workflows
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added `ALLDIFFS` module configuration to all execution profiles (modules.config, modules_arm64.config, modules_docker.config, modules_docker_arm64.config, modules_podman.config, modules_podman_arm64.config)
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added support for running find_positions_of_interest workflow via command-line with new flag structure
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Updated `MIRA_nextflow.sh` script to support new flags with proper command-line parsing and argument passing
+
+### Changed
+
+- [PR #194](https://github.com/CDCgov/Mira-nf/pull/194) - Added functionality in `NEXTFLOWSAMPLESHEET` module to skip the 1-minute sleep
+  if the pipeline is being run locally (task executor is not SGE or slurm)
+
+### `Deprecated`
+
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - deprecated `--reference_seq_table` and `--variants_of_interest` flags in favor of new clearer naming scheme (`--reference_seq_fasta`, `--variants_table`)
+- [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Removed `VARIANTSOFINT` module configuration from all execution profiles (no longer used)
+
+### `Fixed`
+
+- [PR #187](https://github.com/CDCgov/Mira-nf/pull/187) - switch to explicitly specifying 6 output files when calling DAIS-ribosome
+
 ## v2.2.1 - 08.11.2026
 
 - [Amanda Sullivan](https://github.com/mandysulli)
@@ -36,13 +73,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - new dais-ribosome outputs for the flu, sc2 and rsv references.
+- Added the `ANNOTATEMINORVARIANTS` process, which annotates the influenza minor variants table with codon/amino-acid context via `mira-oxide variants --minor-variants --annotate-minor-variants`.
 
 ### `Dependencies`
 
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to mira-oxide v1.5.10 to fix the subtype changes from new dais-ribosome output
 - [PR #184](https://github.com/CDCgov/MIRA-NF/pull/184) - bump to dais-ribsome to v2.1.0 to fix bvic alignment changes from new dais-ribosome
 - [PR #185](https://github.com/CDCgov/MIRA-NF/pull/185) - bump the nextclade tag for h3n2
-- [PR #187](https://github.com/CDCgov/MIRA-NF/pull/187) - update fastqc and mutliqc containers
+- [PR #186](https://github.com/CDCgov/MIRA-NF/pull/186) - update fastqc and mutliqc containers
 
 ## v2.2.0 - 07.24.2026
 
@@ -222,7 +260,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [PR #76](https://github.com/CDCgov/MIRA-NF/pull/76) - added both the find_variants_of_interest module that can be run as a part of analysis and the find_variants_of_interest workflow that run the the workflow described [here](docs/find_variants_of_interest_docs/).
+- [PR #76](https://github.com/CDCgov/MIRA-NF/pull/76) - added both the find_variants_of_interest module that can be run as a part of analysis and the find_variants_of_interest workflow that run the the [workflow described here](docs/find_variants_of_interest_docs/).
 - [PR #82](https://github.com/CDCgov/MIRA-NF/pull/82) - added a `check_version` flag that can be set to false so that MIRA-NF can be run with docker without internet. Default is set to true.
 - [PR #84](https://github.com/CDCgov/MIRA-NF/pull/84) - added IRMA-core's standalone `sampler` module for subsampling single and paired-read `.fastq` files, replacing BBTools' `reformat.sh`.
 - [PR #88](https://github.com/CDCgov/MIRA-NF/pull/88) - Added filtering to a single subtype for the variants_of_interest and positions_of_intrest outputs if the virus flu (as "INFLUENZA") is passed to the program.

@@ -1,8 +1,7 @@
 process FLUTRIMPRIMERS {
     tag "${sample}"
     label 'process_medium'
-
-    container 'ghcr.io/cdcgov/irma-core:v0.10.1'
+    label 'irma_core'
 
     input:
     tuple val(sample), path(subsampled_fastq_1), path(subsampled_fastq_2), path(primers), val(primer_kmer_len), val(primer_restrict_window)

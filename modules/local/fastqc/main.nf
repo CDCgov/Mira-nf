@@ -1,9 +1,9 @@
 process FASTQC {
     tag "${meta.id}"
     label 'process_medium'
+    label 'fastqc'
 
     conda "${moduleDir}/environment.yml"
-    container 'cdcgov/mira-nf:fastqc-alpine'
 
     input:
     tuple val(meta), path(reads)

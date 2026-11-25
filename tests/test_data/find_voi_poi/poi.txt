@@ -1,9 +1,10 @@
-
-subtype	protein	positions	amino_acid	phenotypic_consequence
-A / H1N1	NA	275	Y	test
-A / H1N1	PA	38	T	test
-A / H3N2	NA	119	V	test
-A / H3N2	NA	292	K	test
-A / H3N2	PA	38	T	test
-B	NA	197	N	test
-B	PA	38	T	test
+subtype	protein	positions	amino_acid
+H1N1	NA	275	Y
+ALL	PA	38	F
+ALL	PA	38	M
+ALL	PA	38	N
+ALL	PA	38	S
+ALL	PA	38	T
+H3N2	NA	119	V
+H3N2	NA	292	K
+BVIC	NA	197	N
