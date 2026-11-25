@@ -171,9 +171,8 @@ nextflow_pipeline {
             params {
                 e = "Find-Positions-Of-Interest"
                 input = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/DAIS_ribosome_input.fasta"
-                positions_of_interest = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/poi.txt"
-                reference_seq_table = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/flu_curated_references.txt"
-                dais_module = "influenza"
+                variants_table = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/poi.txt"
+                reference_seq_fasta = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/flu_curated_references.txt"
                 check_version false
                 outdir = "$outputDir"
             }
