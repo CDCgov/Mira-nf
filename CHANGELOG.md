@@ -19,6 +19,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | mira-oxide    | 1.6.1   |
 | nextclade     | 3.30.0  |
 
+### Nextclade Tags Used
+
+| Dataset        | Tag                   |
+| -------------- | --------------------- |
+| flu_h3n2_ha    | 2026-08-07--07-54-41Z |
+| flu_h1n1pdm_ha | 2026-04-14--11-55-23Z |
+| flu_vic_ha     | 2026-04-14--11-55-23Z |
+| flu_h3n2_na    | 2026-08-07--07-54-41Z |
+| flu_h1n1pdm_na | 2026-04-14--11-55-23Z |
+| flu_vic_na     | 2026-04-14--11-55-23Z |
+| rsv_a          | 2026-04-14--11-55-23Z |
+| rsv_b          | 2026-04-14--11-55-23Z |
+| sars-cov-2     | 2026-06-16--14-30-45Z |
+
 ### Added
 
 - [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Added new utility workflow flags: `--all-diffs`, `--positions-of-interest`, `--reference_seq_fasta`, and `--variants_table` to support refined variant analysis workflows
