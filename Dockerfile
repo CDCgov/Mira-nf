@@ -114,7 +114,7 @@ COPY . ${PROJECT_DIR}
 # nextflow.config, which is the single source of truth for every other profile. The dev image
 # build overrides MIRA_OXIDE_IMAGE with ghcr.io/cdcgov/mira-oxide:dev. Sandbox DIRECTORY names
 # are deliberately unversioned so conf/container.config never changes on a version bump.
-ARG MIRA_OXIDE_IMAGE=ghcr.io/cdcgov/mira-oxide:v1.6.0
+ARG MIRA_OXIDE_IMAGE=ghcr.io/cdcgov/mira-oxide:v1.6.1
 ARG IRMA_CORE_IMAGE=ghcr.io/cdcgov/irma-core:v0.12.1
 ARG IRMA_IMAGE=cdcgov/irma:v1.4.0
 ARG DAIS_RIBOSOME_IMAGE=cdcgov/dais-ribosome:v2.2.0

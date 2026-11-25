@@ -227,6 +227,41 @@
                     "description": "Institutional config URL link.",
                     "hidden": true,
                     "fa_icon": "fas fa-users-cog"
+                },
+                "mira_oxide_image": {
+                    "type": "string",
+                    "description": "Container image for mira-oxide.",
+                    "hidden": true
+                },
+                "irma_core_image": {
+                    "type": "string",
+                    "description": "Container image for irma-core.",
+                    "hidden": true
+                },
+                "irma_image": {
+                    "type": "string",
+                    "description": "Container image for IRMA.",
+                    "hidden": true
+                },
+                "dais_ribosome_image": {
+                    "type": "string",
+                    "description": "Container image for DAIS-ribosome.",
+                    "hidden": true
+                },
+                "nextclade_image": {
+                    "type": "string",
+                    "description": "Container image for Nextclade.",
+                    "hidden": true
+                },
+                "fastqc_image": {
+                    "type": "string",
+                    "description": "Container image for FastQC.",
+                    "hidden": true
+                },
+                "multiqc_image": {
+                    "type": "string",
+                    "description": "Container image for MultiQC.",
+                    "hidden": true
                 }
             }
         },
