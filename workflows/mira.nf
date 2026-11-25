@@ -193,7 +193,7 @@ workflow flu_i {
         dais_ref_seq_ch = DAISRIBOSOMEREF.out.dais_seq_output
         dais_ref_ins_ch = DAISRIBOSOMEREF.out.dais_ins_output
         dais_ref_del_ch = DAISRIBOSOMEREF.out.dais_del_output
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_seq_ch, variants_table_ch, PREPILLUMINAREADS.out.dais_module)
+        POSITIONSOFINT(dais_query_seq_ch, dais_ref_seq_ch, dais_query_ins_ch, dais_query_del_ch, dais_ref_ins_ch, dais_ref_del_ch, variants_table_ch, PREPAREREPORTS.out.minor_variants_csv_ch, runid)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1168,76 +1168,6 @@ workflow rsv_o {
     }
 }
 
-workflow find_variants_of_int {
-    //error handling for variants_of_interest flag
-    if (params.variants_of_interest == null && params.reference_seq_table == null && params.dais_module == null ||
-    params.variants_of_interest != null && params.reference_seq_table == null && params.dais_module == null ||
-    params.variants_of_interest == null && params.reference_seq_table != null && params.dais_module == null ||
-    params.variants_of_interest == null && params.reference_seq_table == null && params.dais_module != null) {
-        println 'ERROR!!: This workflow requires the variants_of_interest, reference_seq_table and dais_module flags be specificied.'
-        workflow.exit
-    }
-    if (params.variants_of_interest != null && params.reference_seq_table == null && params.dais_module != null) {
-        println 'ERROR!!: This workflow requires the variants_of_interest, reference_seq_table and dais_module flags be specificied.'
-        println 'Please provide a table of reference seqeunces with the reference_seq_table flag'
-        workflow.exit
-    }
-    if (params.variants_of_interest == null && params.reference_seq_table != null && params.dais_module != null) {
-        println 'ERROR!!: This workflow requires the variants_of_interest, reference_seq_table and dais_module flags be specificied.'
-        println 'Please provide a table of variants with the variants_of_interest flag'
-        workflow.exit
-    }
-    if (params.variants_of_interest != null && params.reference_seq_table != null && params.dais_module == null) {
-        println 'ERROR!!: This workflow requires the variants_of_interest, reference_seq_table and dais_module flags be specificied.'
-        println 'Please provide the dais module needed (influenza,betacoronavirus or rsv) with the dais_module flag'
-        workflow.exit
-    }
-    if (params.positions_of_interest != null) {
-        println 'ERROR!!: Please run the Find-Positions-Of-Interest workflow if you would like to used the positions_of_interest flag.'
-        workflow.exit
-    }
-
-    // Initializing parameters
-    dais_input_ch = Channel.fromPath(params.input, checkIfExists: true)
-    ref_seq_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
-    variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-    ch_versions = Channel.empty()
-    dais_module_ch = Channel.value(params.dais_module).map { it.toUpperCase() }
-    //If sourcepath flag is given, then it will use the sourcepath to point to the reference files and support files in prepareIRMAjson and staticHTML
-    if (params.sourcepath == null) {
-        support_file_path = Channel.fromPath(projectDir, checkIfExists: true)
-    } else {
-        support_file_path = Channel.fromPath(params.sourcepath, checkIfExists: true)
-    }
-
-    //MODULE: Run Dais Ribosome
-    DAISRIBOSOME(dais_input_ch, dais_module_ch)
-    ch_versions = ch_versions.unique().mix(DAISRIBOSOME.out.versions)
-
-    //MODULE: Run Variants of Interest
-    VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_seq_ch, variant_of_int_table_ch, dais_module_ch)
-    ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
-
-    // collate versions with unique lines into pipeline_info
-        versions_path_ch = ch_versions
-            .collectFile(
-                name: 'collated_versions.yml',
-                storeDir: "${params.outdir}/pipeline_info"
-            )
-            .map { file ->
-                def uniqueLines = file.text
-                    .readLines()
-                    .unique()
-                    .join('\n') + '\n'
-
-                def out = file.parent.resolve('collated_versions.unique.yml')
-                out.text = uniqueLines
-                return out
-            }
-        versions_path_ch.view()
-
-}
-
 workflow find_positions_of_int {
     //error handling for positions_of_interest flag
     if (params.positions_of_interest == null && params.reference_seq_table == null && params.dais_module == null ||
@@ -1272,7 +1202,7 @@ workflow find_positions_of_int {
     ref_seq_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
     positions_of_interest_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
     ch_versions = Channel.empty()
-    dais_module_ch = Channel.value(params.dais_module).map { it.toUpperCase() }
+    dais_module_ch = 'INFLUENZA'
     //If sourcepath flag is given, then it will use the sourcepath to point to the reference files and support files in prepareIRMAjson and staticHTML
     if (params.sourcepath == null) {
         support_file_path = Channel.fromPath(projectDir, checkIfExists: true)
@@ -1387,13 +1317,11 @@ workflow MIRA {
     } else if (params.e == 'RSV-Illumina') {
         rsv_i()
     } else if (params.e == 'RSV-ONT') {
+    } else if (params.e == 'RSV-ONT') {
         rsv_o()
-    } else if (params.e == 'Find-Variants-Of-Interest') {
-       find_variants_of_int()
     } else if (params.e == 'Find-Positions-Of-Interest') {
        find_positions_of_int()
     }
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     COMPLETION EMAIL AND SUMMARY

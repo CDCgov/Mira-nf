@@ -166,31 +166,6 @@ nextflow_pipeline {
             )
         }
     }
-    test("Find-Variants-Of-Interest Check") {
-        when {
-            params {
-                e = "Find-Variants-Of-Interest"
-                input = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/DAIS_ribosome_input.fasta"
-                variants_of_interest = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/poi.txt"
-                reference_seq_table = "https://raw.githubusercontent.com/CDCgov/MIRA-NF/refs/heads/dev/tests/test_data/find_voi_poi/flu_curated_references.txt"
-                dais_module = "influenza"
-                check_version false
-                outdir = "$outputDir"
-            }
-        }
-        then {
-            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
-            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
-            assertAll(
-                { assert workflow.success },
-                { assert snapshot(
-                    removeNextflowVersion("$params.outdir/pipeline_info/pipeline_software_versions.yml"),
-                    stable_name,
-                    stable_path
-                ).match() }
-            )
-        }
-    }
     test("Find-Positions-Of-Interest Check") {
         when {
             params {

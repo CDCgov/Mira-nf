@@ -25,6 +25,7 @@ process ALLDIFFS {
 
     """
     mira-oxide variants \\
+        --all-diffs \\
         --query-dais-file ${query_dais} \\
         --ref-dais-file ${ref_dais} \\
         --output-xsv mira_${runid}_all_diffs.csv \\
@@ -34,7 +35,7 @@ process ALLDIFFS {
         --ref-deletion-file ${ref_del} \\
         --variants-of-interest ${variants_of_interest} \\
         --minor-variants ${minor_variants} \\
-        --all-diffs
+
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}": variantsofint: mira-oxide \$(mira-oxide --version |& sed '1!d ; s/mira-oxide //')

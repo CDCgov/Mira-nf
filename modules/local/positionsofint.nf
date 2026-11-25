@@ -3,13 +3,18 @@ process POSITIONSOFINT {
     label 'mira_oxide'
 
     input:
-    path dais_seq_output
-    path ref_table
-    path position_of_int_table
-    val virus
+    path query_dais
+    path ref_dais
+    path query_ins
+    path query_del
+    path ref_ins
+    path ref_del
+    path variants_of_interest
+    path minor_variants
+    val  runid
 
     output:
-    path "*", emit: position_of_int
+    path "*_positions_of_interest.csv", emit: position_of_int
     path "versions.yml", emit: versions
 
     when:
@@ -19,7 +24,18 @@ process POSITIONSOFINT {
     def args = task.ext.args ?: ''
 
     """
-    mira-oxide positions-of-interest -i ${dais_seq_output} -r ${ref_table} -o positions_of_interest.csv -m ${position_of_int_table}
+    mira-oxide variants \\
+        --positions-of-interest \\
+        --query-dais-file ${query_dais} \\
+        --ref-dais-file ${ref_dais} \\
+        --output-xsv mira_${runid}_positions_of_interest.csv \\
+        --query-insertion-file ${query_ins} \\
+        --query-deletion-file ${query_del} \\
+        --ref-insertion-file ${ref_ins} \\
+        --ref-deletion-file ${ref_del} \\
+        --variants-of-interest ${variants_of_interest} \\
+        --minor-variants ${minor_variants} \\
+        --all-positions
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}": positionsofint: mira-oxide \$(mira-oxide --version |& sed '1!d ; s/mira-oxide //')
