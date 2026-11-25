@@ -17,7 +17,6 @@ include { PREPONTREADS         } from '../subworkflows/local/prepontreads'
 include { IRMA                 } from '../modules/local/irma'
 include { CHECKIRMA            } from '../subworkflows/local/checkirma'
 include { DAISRIBOSOME         } from '../modules/local/daisribosome'
-include { VARIANTSOFINT        } from '../modules/local/variantsofint'
 include { POSITIONSOFINT       } from '../modules/local/positionsofint'
 include { PREPAREREPORTS       } from '../subworkflows/local/preparereports'
 include { DAISRIBOSOMEREF      } from '../modules/local/daisribosomeref'
@@ -173,7 +172,7 @@ workflow flu_i {
     PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
-    //MODULE: Run Variants of Interest
+    //MODULE: Run All Diffs
     if(params.all_diffs){
         ref_seq_ch = Channel.fromPath(params.reference_seq_fasta, checkIfExists: true)
         variants_table_ch = Channel.fromPath(params.variants_table, checkIfExists: true)
@@ -193,7 +192,7 @@ workflow flu_i {
         dais_ref_seq_ch = DAISRIBOSOMEREF.out.dais_seq_output
         dais_ref_ins_ch = DAISRIBOSOMEREF.out.dais_ins_output
         dais_ref_del_ch = DAISRIBOSOMEREF.out.dais_del_output
-        POSITIONSOFINT(dais_query_seq_ch, dais_ref_seq_ch, dais_query_ins_ch, dais_query_del_ch, dais_ref_ins_ch, dais_ref_del_ch, variants_table_ch, PREPAREREPORTS.out.minor_variants_csv_ch, runid)
+        POSITIONSOFINT(dais_query_seq_ch, dais_ref_seq_ch, dais_query_ins_ch, dais_query_del_ch, dais_ref_ins_ch, dais_ref_del_ch, variants_table_ch, runid, PREPAREREPORTS.out.minor_variants_csv_ch)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -288,6 +287,14 @@ workflow flu_o {
     samplesheet_ch = Channel.fromPath(params.input, checkIfExists: true)
     experiment_type_ch = Channel.value(params.e)
     ch_versions = Channel.empty()
+    if (params.custom_runid != null) {
+        runid = params.custom_runid
+    } else {
+        def path = "${params.runpath}"
+        def folder_name = new File(path)
+        runid = folder_name.name
+    }
+    
 
     if (params.amd_platform == false) {
         // MODULE: Concat all fastq files by barcode
@@ -360,29 +367,36 @@ workflow flu_o {
 
     // MODULE: Run Dais Ribosome
     DAISRIBOSOME(CHECKIRMA.out.dais_ch, PREPONTREADS.out.dais_module)
+    dais_query_seq_ch = DAISRIBOSOME.out.dais_seq_output
+    dais_query_ins_ch = DAISRIBOSOME.out.dais_ins_output
+    dais_query_del_ch = DAISRIBOSOME.out.dais_del_output
     ch_versions = ch_versions.unique().mix(DAISRIBOSOME.out.versions)
 
     // SUBWORKFLOW: Create reports
     PREPAREREPORTS(DAISRIBOSOME.out.dais_outputs.collect(), CHECKIRMA.out.irma_dir_ch, ch_versions)
     ch_versions = ch_versions.unique().mix(PREPAREREPORTS.out.ch_versions)
 
-    //MODULE: Run Variants of Interest
+    //MODULE: Run All Diffs
     if(params.all_diffs){
         ref_seq_ch = Channel.fromPath(params.reference_seq_fasta, checkIfExists: true)
         variants_table_ch = Channel.fromPath(params.variants_table, checkIfExists: true)
-        DAISRIBOSOME(ref_seq_ch, PREPONTREADS.out.dais_module)
-        dais_ref_seq_ch = DAISRIBOSOME.out.dais_ref_seq_output
-        dais_ref_ins_ch = DAISRIBOSOME.out.dais_ins_output
-        dais_ref_del_ch = DAISRIBOSOME.out.dais_del_output
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_seq_ch, variants_table_ch, PREPONTREADS.out.dais_module)
-        ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
+        DAISRIBOSOMEREF(ref_seq_ch, PREPONTREADS.out.dais_module)
+        dais_ref_seq_ch = DAISRIBOSOMEREF.out.dais_seq_output
+        dais_ref_ins_ch = DAISRIBOSOMEREF.out.dais_ins_output
+        dais_ref_del_ch = DAISRIBOSOMEREF.out.dais_del_output
+        ALLDIFFS(dais_query_seq_ch, dais_ref_seq_ch, dais_query_ins_ch, dais_query_del_ch, dais_ref_ins_ch, dais_ref_del_ch, variants_table_ch, PREPAREREPORTS.out.minor_variants_csv_ch, runid)
+        ch_versions = ch_versions.unique().mix(ALLDIFFS.out.versions)
     }
 
     //MODULE: Run Positions of Interest
     if(params.positions_of_interest){
         ref_seq_ch = Channel.fromPath(params.reference_seq_fasta, checkIfExists: true)
-        positions_of_int_table_ch = Channel.fromPath(params.variants_table, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_seq_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
+        variants_table_ch = Channel.fromPath(params.variants_table, checkIfExists: true)
+        DAISRIBOSOMEREF(ref_seq_ch, PREPONTREADS.out.dais_module)
+        dais_ref_seq_ch = DAISRIBOSOMEREF.out.dais_seq_output
+        dais_ref_ins_ch = DAISRIBOSOMEREF.out.dais_ins_output
+        dais_ref_del_ch = DAISRIBOSOMEREF.out.dais_del_output
+        POSITIONSOFINT(dais_query_seq_ch, dais_ref_seq_ch, dais_query_ins_ch, dais_query_del_ch, dais_ref_ins_ch, dais_ref_del_ch, variants_table_ch, runid, PREPAREREPORTS.out.minor_variants_csv_ch)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -581,6 +595,13 @@ workflow sc2_wgs_o {
     samplesheet_ch = Channel.fromPath(params.input, checkIfExists: true)
     experiment_type_ch = Channel.value(params.e)
     ch_versions = Channel.empty()
+    if (params.custom_runid != null) {
+        runid = params.custom_runid
+    } else {
+        def path = "${params.runpath}"
+        def folder_name = new File(path)
+        runid = folder_name.name
+    }
 
     if (params.amd_platform == false) {
         // OMICS & Local PLATFORM: START Concat all fastq files by barcode
@@ -1059,6 +1080,13 @@ workflow rsv_o {
     samplesheet_ch = Channel.fromPath(params.input, checkIfExists: true)
     experiment_type_ch = Channel.value(params.e)
     ch_versions = Channel.empty()
+    if (params.custom_runid != null) {
+        runid = params.custom_runid
+    } else {
+        def path = "${params.runpath}"
+        def folder_name = new File(path)
+        runid = folder_name.name
+    }
 
     if (params.amd_platform == false) {
         // OMICS & Local PLATFORM: START Concat all fastq files by barcode
@@ -1169,38 +1197,22 @@ workflow rsv_o {
 }
 
 workflow find_positions_of_int {
-    //error handling for positions_of_interest flag
-    if (params.positions_of_interest == null && params.reference_seq_table == null && params.dais_module == null ||
-    params.positions_of_interest != null && params.reference_seq_table == null && params.dais_module == null ||
-    params.positions_of_interest == null && params.reference_seq_table != null && params.dais_module == null ||
-    params.positions_of_interest == null && params.reference_seq_table == null && params.dais_module != null) {
-        println 'ERROR!!: This workflow requires the positions_of_interest, reference_seq_table and dais_module flags be specificied.'
-        workflow.exit
-    }
-    if (params.positions_of_interest != null && params.reference_seq_table == null && params.dais_module != null) {
-        println 'ERROR!!: This workflow requires the positions_of_interest, reference_seq_table and dais_module flags be specificied.'
-        println 'Please provide a table of reference seqeunces with the reference_seq_table flag'
-        workflow.exit
-    }
-    if (params.positions_of_interest == null && params.reference_seq_table != null && params.dais_module != null) {
-        println 'ERROR!!: This workflow requires the positions_of_interest, reference_seq_table and dais_module flags be specificied.'
-        println 'Please provide a table of variants with the positions_of_interest flag'
-        workflow.exit
-    }
-    if (params.positions_of_interest != null && params.reference_seq_table != null && params.dais_module == null) {
-        println 'ERROR!!: This workflow requires the positions_of_interest, reference_seq_table and dais_module flags be specificied.'
-        println 'Please provide the dais module needed (influenza,betacoronavirus or rsv) with the dais_module flag'
-        workflow.exit
-    }
-    if (params.variants_of_interest != null) {
-        println 'ERROR!!: Please run the Find-Variants-Of-Interest workflow if you would like to used the variantsS_of_interest flag.'
+    //error handling for positions_of_interest workflow
+    if (params.reference_seq_fasta == null || params.variants_table == null) {
+        println 'ERROR!!: This workflow requires the reference_seq_fasta and variants_table flags be specified.'
+        if (params.reference_seq_fasta == null) {
+            println 'Please provide reference sequences with the reference_seq_fasta flag'
+        }
+        if (params.variants_table == null) {
+            println 'Please provide a variants table with the variants_table flag'
+        }
         workflow.exit
     }
 
     // Initializing parameters
-    dais_input_ch = Channel.fromPath(params.input, checkIfExists: true)
-    ref_seq_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
-    positions_of_interest_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
+    query_seq_fasta_ch = Channel.fromPath(params.input, checkIfExists: true)
+    ref_seq_fasta_ch = Channel.fromPath(params.reference_seq_fasta, checkIfExists: true)
+    variants_table_ch = Channel.fromPath(params.variants_table, checkIfExists: true)
     ch_versions = Channel.empty()
     dais_module_ch = 'INFLUENZA'
     //If sourcepath flag is given, then it will use the sourcepath to point to the reference files and support files in prepareIRMAjson and staticHTML
@@ -1210,12 +1222,30 @@ workflow find_positions_of_int {
         support_file_path = Channel.fromPath(params.sourcepath, checkIfExists: true)
     }
 
+    if (params.custom_runid != null) {
+        runid = params.custom_runid
+    } else {
+        def path = "${params.runpath}"
+        def folder_name = new File(path)
+        runid = folder_name.name
+    }
+
     //MODULE: Run Dais Ribosome
-    DAISRIBOSOME(dais_input_ch, dais_module_ch)
+    DAISRIBOSOME(query_seq_fasta_ch, dais_module_ch)
+    dais_query_seq_ch = DAISRIBOSOME.out.dais_seq_output
+    dais_query_ins_ch = DAISRIBOSOME.out.dais_ins_output
+    dais_query_del_ch = DAISRIBOSOME.out.dais_del_output
     ch_versions = ch_versions.unique().mix(DAISRIBOSOME.out.versions)
 
+     //MODULE: Run Dais Ribosome for refs
+    DAISRIBOSOMEREF(ref_seq_fasta_ch, dais_module_ch)
+    dais_ref_seq_ch = DAISRIBOSOMEREF.out.dais_seq_output
+    dais_ref_ins_ch = DAISRIBOSOMEREF.out.dais_ins_output
+    dais_ref_del_ch = DAISRIBOSOMEREF.out.dais_del_output
+    ch_versions = ch_versions.unique().mix(DAISRIBOSOMEREF.out.versions)
+
     //MODULE: Run Positions of Interest
-    POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_seq_ch, positions_of_interest_ch, dais_module_ch)
+    POSITIONSOFINT(dais_query_seq_ch, dais_ref_seq_ch, dais_query_ins_ch, dais_query_del_ch, dais_ref_ins_ch, dais_ref_del_ch, variants_table_ch, runid, [])
     ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
 
     // collate versions with unique lines into pipeline_info
@@ -1317,7 +1347,6 @@ workflow MIRA {
     } else if (params.e == 'RSV-Illumina') {
         rsv_i()
     } else if (params.e == 'RSV-ONT') {
-    } else if (params.e == 'RSV-ONT') {
         rsv_o()
     } else if (params.e == 'Find-Positions-Of-Interest') {
        find_positions_of_int()
@@ -1338,7 +1367,7 @@ workflow MIRA {
     if (email_address) {
     workflow.onComplete {
         if (workflow_meta.success == true) {
-            if (experiment_type != 'Find-Variants-Of-Interest' && experiment_type != 'Find-Positions-Of-Interest') {
+            if (experiment_type != 'Find-Positions-Of-Interest') {
     def versionPath = "${output_dir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
     def path = "${run_path}"
@@ -1392,7 +1421,7 @@ workflow MIRA {
         mail_args.attach = final_files
     }
     sendMail(mail_args)
-} else if (experiment_type == 'Find-Variants-Of-Interest' || experiment_type == 'Find-Positions-Of-Interest') {
+} else if (experiment_type == 'Find-Positions-Of-Interest') {
     def versionPath = "${output_dir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
     def msg = """

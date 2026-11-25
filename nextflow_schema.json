@@ -43,7 +43,6 @@
                         "SC2-Whole-Genome-Illumina",
                         "RSV-Illumina",
                         "RSV-ONT",
-                        "Find-Variants-Of-Interest",
                         "Find-Positions-Of-Interest"
                     ]
                 }
