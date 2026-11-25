@@ -43,7 +43,6 @@
                         "SC2-Whole-Genome-Illumina",
                         "RSV-Illumina",
                         "RSV-ONT",
-                        "Find-Variants-Of-Interest",
                         "Find-Positions-Of-Interest"
                     ]
                 }
@@ -150,25 +149,23 @@
                     "hidden": true,
                     "help_text": "Copies the fastq files of Illumina runs into the out directory. Only on for Standard (for AWS) by default."
                 },
-                "variants_of_interest": {
-                    "type": "string",
-                    "format": "file-path",
-                    "description": "The variants of interest table to be used with variants_of_interest module"
+                "all_diffs": {
+                    "type": "boolean",
+                    "description": "When set to true, this flag will produce a csv file listing all differences between the query sequences and the reference sequences. Requires reference seqeunces via dais_reference_fasta flag."
                 },
                 "positions_of_interest": {
+                    "type": "boolean",
+                    "description": "When set to true, this flag will produce a csv file listing all amino acid and nucleotide information at specific positions query sequences and the reference sequences. Requires reference seqeunces via dais_reference_fasta flag and positions via the variants_table flag."
+                },
+                "reference_seq_fasta": {
                     "type": "string",
                     "format": "file-path",
-                    "description": "The positions of interest table to be used with positions_of_interest module"
+                    "description": "The reference sequences to be used with all_diffs or Positions_of_interest flag/module"
                 },
-                "reference_seq_table": {
+                "variants_table": {
                     "type": "string",
                     "format": "file-path",
-                    "description": "The reference sequence table to be used with find_variants_of_interest"
-                },
-                "dais_module": {
-                    "type": "string",
-                    "description": "The dais_module that will be used by DAIS-ribosome. Options: influenza, betacoronavirus, rsv",
-                    "enum": ["INFLUENZA", "BETACORONAVIRUS", "RSV"]
+                    "description": "The variants of interest table to be used with all_diffs or Positions_of_interest flag/module"
                 },
                 "check_version": {
                     "type": "boolean",

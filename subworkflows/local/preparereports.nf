@@ -102,6 +102,7 @@ workflow PREPAREREPORTS {
         summary_csv_ch = PREPAREMIRAREPORTS.out.summary_csv
         summary_html_ch = PREPAREMIRAREPORTS.out.summary_html
         nextclade_fasta_files_ch = PREPAREMIRAREPORTS.out.nextclade_fasta_files
+        minor_variants_csv_ch = PREPAREMIRAREPORTS.out.minor_variants_csv
 
         // MODULE: Annotate the minor variants table with codon/amino-acid context (influenza only)
         if (virus == 'flu') {
@@ -114,6 +115,7 @@ workflow PREPAREREPORTS {
         summary_csv_ch // channel: holds aggregate csv summary report
         summary_html_ch // channel: holds aggregate html summary report
         nextclade_fasta_files_ch // channel: holds nextclade fasta file
+        minor_variants_csv_ch // channel: holds minor variants csv file
         virus // channel: holds virus type
         runid // value: holds run id
 }
