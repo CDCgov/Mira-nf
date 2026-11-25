@@ -29,7 +29,7 @@ RUN cat /usr/local/share/ca-certificates/min-cdc-bundle-ca.crt >> /etc/ssl/certs
 
 ############# Install Singularity with GO ##################
 # This has to be the most up to date version or it will fail
-ENV GO_VERSION=1.26.1
+ENV GO_VERSION=1.26.4
 ENV SINGULARITY_VERSION=4.4.0
 
 RUN curl -L https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tgz \
@@ -115,9 +115,9 @@ COPY . ${PROJECT_DIR}
 # build overrides MIRA_OXIDE_IMAGE with ghcr.io/cdcgov/mira-oxide:dev. Sandbox DIRECTORY names
 # are deliberately unversioned so conf/container.config never changes on a version bump.
 ARG MIRA_OXIDE_IMAGE=ghcr.io/cdcgov/mira-oxide:v1.6.0
-ARG IRMA_CORE_IMAGE=ghcr.io/cdcgov/irma-core:v0.10.1
-ARG IRMA_IMAGE=cdcgov/irma:v1.3.5
-ARG DAIS_RIBOSOME_IMAGE=cdcgov/dais-ribosome:v2.1.0
+ARG IRMA_CORE_IMAGE=ghcr.io/cdcgov/irma-core:v0.12.1
+ARG IRMA_IMAGE=cdcgov/irma:v1.4.0
+ARG DAIS_RIBOSOME_IMAGE=cdcgov/dais-ribosome:v2.2.0
 ARG NEXTCLADE_IMAGE=nextstrain/nextclade:3.21.2
 
 # Pull Singularity images and convert to sandboxes

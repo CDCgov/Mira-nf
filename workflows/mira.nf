@@ -172,7 +172,7 @@ workflow flu_i {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -180,7 +180,7 @@ workflow flu_i {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -293,7 +293,7 @@ workflow flu_o {
             def barcode = item.barcode
             def sample_id = item.sample_id
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -361,7 +361,7 @@ workflow flu_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -369,7 +369,7 @@ workflow flu_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -483,7 +483,7 @@ workflow sc2_spike_o {
             def sample_id = item.sample_id
             // def fastq_path = "${params.runpath}/**/${barcode}/*.fastq.gz"; // it was not working with **, so I changed it to fastq_pass
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -550,7 +550,7 @@ workflow sc2_spike_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -558,7 +558,7 @@ workflow sc2_spike_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -638,7 +638,7 @@ workflow sc2_wgs_o {
             def barcode = item.barcode
             def sample_id = item.sample_id
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -706,7 +706,7 @@ workflow sc2_wgs_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -714,7 +714,7 @@ workflow sc2_wgs_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -910,7 +910,7 @@ workflow sc2_wgs_i {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -918,7 +918,7 @@ workflow sc2_wgs_i {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1112,7 +1112,7 @@ workflow rsv_i {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -1120,7 +1120,7 @@ workflow rsv_i {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPILLUMINAREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1230,7 +1230,7 @@ workflow rsv_o {
             def barcode = item.barcode
             def sample_id = item.sample_id
             def fastq_path = "${params.runpath}/fastq_pass/${barcode}/*.fastq.gz"
-            tuple(barcode, sample_id, file(fastq_path))
+            tuple(barcode, sample_id, files(fastq_path))
         }
         concatenated_fastqs_ch = fastq_ch | CONCATFASTQS
         collected_concatenated_fastqs_ch = concatenated_fastqs_ch.collect()
@@ -1298,7 +1298,7 @@ workflow rsv_o {
     if(params.variants_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         variant_of_int_table_ch = Channel.fromPath(params.variants_of_interest, checkIfExists: true)
-        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch)
+        VARIANTSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, variant_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(VARIANTSOFINT.out.versions)
     }
 
@@ -1306,7 +1306,7 @@ workflow rsv_o {
     if(params.positions_of_interest){
         ref_table_ch = Channel.fromPath(params.reference_seq_table, checkIfExists: true)
         positions_of_int_table_ch = Channel.fromPath(params.positions_of_interest, checkIfExists: true)
-        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch)
+        POSITIONSOFINT(DAISRIBOSOME.out.dais_seq_output, ref_table_ch, positions_of_int_table_ch, PREPONTREADS.out.dais_module)
         ch_versions = ch_versions.unique().mix(POSITIONSOFINT.out.versions)
     }
 
@@ -1486,18 +1486,18 @@ workflow find_positions_of_int {
 }
 // MAIN WORKFLOW
 
+// Taken from the image tags so the banner cannot drift from the *_image params.
+def imageVersion(img) {
+    def p = img.tokenize('/').last().tokenize(':')
+    return (p.size() > 1 ? p[1] : 'latest').replaceFirst(/^v(?=\d)/, '').padRight(8)
+}
+
 workflow MIRA {
     //If sourcepath flag is given, then it will use the sourcepath to point to the support files
     if (params.sourcepath == null) {
         support_file_path = Channel.fromPath(projectDir, checkIfExists: true)
     } else {
         support_file_path = Channel.fromPath(params.sourcepath, checkIfExists: true)
-    }
-
-    // Taken from the image tags so the banner cannot drift from the *_image params.
-    def imageVersion = { img ->
-        def p = img.tokenize('/').last().tokenize(':')
-        (p.size() > 1 ? p[1] : 'latest').replaceFirst(/^v(?=\d)/, '').padRight(8)
     }
 
     println """
@@ -1570,31 +1570,38 @@ workflow MIRA {
     } else if (params.e == 'Find-Positions-Of-Interest') {
        find_positions_of_int()
     }
-}
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     COMPLETION EMAIL AND SUMMARY
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-if (params.email) {
+    def workflow_meta = workflow
+    def email_address = params.email
+    def experiment_type = params.e
+    def output_dir = params.outdir
+    def run_path = params.runpath
+    def custom_run_id = params.custom_runid
+
+    if (email_address) {
     workflow.onComplete {
-        if (workflow.success == true) {
-            if (params.e != 'Find-Variants-Of-Interest' && params.e != 'Find-Positions-Of-Interest') {
-    def versionPath = "${params.outdir}/pipeline_info/mira_version_check.txt"
+        if (workflow_meta.success == true) {
+            if (experiment_type != 'Find-Variants-Of-Interest' && experiment_type != 'Find-Positions-Of-Interest') {
+    def versionPath = "${output_dir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
-    def path = "${params.runpath}"
+    def path = "${run_path}"
     def folder_name = new File(path)
-    def basename = params.custom_runid != null ? params.custom_runid : folder_name.name
-    def ac_file = new File("${params.outdir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta")
+    def basename = custom_run_id != null ? custom_run_id : folder_name.name
+    def ac_file = new File("${output_dir}/aggregate_outputs/mira-reports/mira_${basename}_amended_consensus.fasta")
 
     // Attach in priority order, skipping anything that would push the payload to the 10 MB
     // mail-gateway limit. Not every file exists on every experiment type.
     def max_attach_bytes = 10 * 1024 * 1024
     def candidates = [
-        new File("${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv"),
+        new File("${output_dir}/aggregate_outputs/csv-reports/mira_${basename}_summary.csv"),
         ac_file,
-        new File("${params.outdir}/aggregate_outputs/csv-reports/mira_${basename}_annotated_minor_variants.csv")
+        new File("${output_dir}/aggregate_outputs/csv-reports/mira_${basename}_annotated_minor_variants.csv")
     ]
     def final_files = []
     def omitted = []
@@ -1613,19 +1620,19 @@ if (params.email) {
 
     def msg = """
     Pipeline execution summary
-    Completed at: ${workflow.complete}
-    Duration    : ${workflow.duration}
-    Success     : ${workflow.success}
-    workDir     : ${workflow.workDir}
-    outDir      : ${params.outdir}
-    exit status : ${workflow.exitStatus}
+    Completed at: ${workflow_meta.complete}
+    Duration    : ${workflow_meta.duration}
+    Success     : ${workflow_meta.success}
+    workDir     : ${workflow_meta.workDir}
+    outDir      : ${output_dir}
+    exit status : ${workflow_meta.exitStatus}
     ${ac_file.exists() ? fileContent : 'No amended consensus was created!'}
     ${omitted ? "Not attached (would exceed the ${max_attach_bytes.intdiv(1024 * 1024)} MB email limit): ${omitted.join(', ')}" : ''}
     """
     .stripIndent()
 
     def mail_args = [
-        to: params.email,
+        to: email_address,
         from: 'mira-nf@mail.biotech.cdc.gov',
         subject: 'MIRA-NF pipeline execution',
         body: msg
@@ -1634,51 +1641,52 @@ if (params.email) {
         mail_args.attach = final_files
     }
     sendMail(mail_args)
-} else if (params.e == 'Find-Variants-Of-Interest' || params.e == 'Find-Positions-Of-Interest') {
-    def versionPath = "${params.outdir}/pipeline_info/mira_version_check.txt"
+} else if (experiment_type == 'Find-Variants-Of-Interest' || experiment_type == 'Find-Positions-Of-Interest') {
+    def versionPath = "${output_dir}/pipeline_info/mira_version_check.txt"
     def fileContent = new File(versionPath).exists() ? new File(versionPath).text : "Version file not found."
     def msg = """
     Pipeline execution summary
-    Completed at: ${workflow.complete}
-    Duration    : ${workflow.duration}
-    Success     : ${workflow.success}
-    workDir     : ${workflow.workDir}
-    outDir      : ${params.outdir}
-    exit status : ${workflow.exitStatus}
+    Completed at: ${workflow_meta.complete}
+    Duration    : ${workflow_meta.duration}
+    Success     : ${workflow_meta.success}
+    workDir     : ${workflow_meta.workDir}
+    outDir      : ${output_dir}
+    exit status : ${workflow_meta.exitStatus}
     ${fileContent}
     Variants of interest workflow has run successfully.
     """
     .stripIndent()
 
     sendMail(
-        to: params.email,
+        to: email_address,
         from: 'mira-nf@mail.biotech.cdc.gov',
         subject: 'MIRA-NF pipeline execution',
         body: msg
     )
 }
-        } else if (workflow.success == false) {
+        } else if (workflow_meta.success == false) {
             def msg = """
        Pipeline execution summary
-       Completed at: ${workflow.complete}
-       Duration    : ${workflow.duration}
-       Success     : ${workflow.success}
-       workDir     : ${workflow.workDir}
-       outDir      : ${params.outdir}
-       exit status : ${workflow.exitStatus}
+       Completed at: ${workflow_meta.complete}
+       Duration    : ${workflow_meta.duration}
+       Success     : ${workflow_meta.success}
+       workDir     : ${workflow_meta.workDir}
+       outDir      : ${output_dir}
+       exit status : ${workflow_meta.exitStatus}
        """
        .stripIndent()
 
-            sendMail(to: params.email, from:'mira-nf@mail.biotech.cdc.gov', subject: 'MIRA-NF pipeline execution', body:msg)
+            sendMail(to: email_address, from:'mira-nf@mail.biotech.cdc.gov', subject: 'MIRA-NF pipeline execution', body:msg)
         }
     }
 
     workflow.onError {
-        if (workflow.errorReport.contains('Process requirement exceeds available memory')) {
+        if (workflow_meta.errorReport?.contains('Process requirement exceeds available memory')) {
             println('🛑 Default resources exceed availability 🛑 ')
             println('💡 See here on how to configure pipeline: https://nf-co.re/docs/usage/configuration#tuning-workflow-resources 💡')
         }
     }
+}
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
