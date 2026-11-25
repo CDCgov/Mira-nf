@@ -3,6 +3,6 @@
     "line-length": false,
     "MD024": {
         // Only check sibling headings
-        "siblings_only": true
-    }
+        "siblings_only": true,
+    },
 }

@@ -14,6 +14,7 @@ The input file for this workflow is a FASTA file containing assembled sequences 
 ### The Reference Sequence File
 
 The reference sequence file should contain the reference sequences in FASTA format thaty ou would like to compare your query seqeunces with. These will be used by DAIS-ribosome to align with and compare against your query sequences.
+
 ```
 >PHUKET3073_B_HA_68235
 ATGAAGGCAATAATTGTACTACTCATGGTAGTAACATCCAACGCAGATCGAATCTGCACTGGGATAACATCTTCAAACTCACCTCATGTGGTCAAAACAGCTACTCAAGGGGAGGTCAATGTGACTGGCGTGATACCACTGACAACAACACCAACAAAATCTTATTTTGCAAATCTCAAAGGAACAAGGACCAGAGGGAAACTATGCCCGGACTGTCTCAACTGTACAGATCTGGATGTGGCCTTGGGCAGGCCAATGTGTGTGGGGACCACACCTTCTGCTAAAGCTTCAATACTCCATGAGGTCAGACCTGTTACATCCGGGTGCTTTCCTATAATGCACGACAGAACAAAAATCAGGCAACTACCCAATCTTCTCAGAGGATATGAAAAGATCAGGTTATCAACCCAAAACGTTATCGATGCAGAAAAAGCACCAGGAGGACCCTACAGACTTGGAACCTCAGGATCTTGCCCTAACGCTACCAGTAAAATCGGATTTTTTGCAACAATGGCTTGGGCTGTCCCAAAGGACAACTACAAAAATGCAACGAACCCACTAACAGTGGAAGTACCATACATTTGTACAGAAGGGGAAGACCAAATTACTGTTTGGGGGTTCCATTCGGATGACAAAACCCAAATGAAGAGCCTCTATGGAGACTCAAATCCTCAAAAGTTCACCTCATCTGCTAATGGAGTAACCACGCATTATGTTTCTCAGATTGGCGACTTCCCAGATCAAACAGAAGACGGAGGACTACCACAAAGCGGCAGAATTGTTGTTGATTACATGATGCAAAAACCTGGGAAAACAGGAACAATTGTCTATCAAAGGGGTGTTTTGTTGCCTCAAAAGGTGTGGTGCGCGAGTGGCAGGAGCAAAGTAATAAAAGGGTCATTGCCTTTAATTGGTGAAGCAGATTGCCTTCATGAAGAATACGGTGGATTAAACAAAAGCAAGCCTTACTACACAGGAAAACATGCAAAAGCCATAGGAAATTGCCCAATATGGGTAAAAACACCTTTGAAGCTTGCCAATGGAACCAAATATAGACCTCCTGCAAAACTATTGAAGGAAAGGGGTTTCTTCGGAGCTATTGCTGGTTTCCTAGAAGGAGGATGGGAAGGAATGATTGCAGGTTGGCACGGATACACATCTCACGGAGCACATGGAGTGGCAGTGGCGGCAGACCTTAAGAGTACACAAGAAGCTATAAATAAGATAACAAAAAATCTCAATTCTTTGAGTGAACTAGAAGTAAAGAACCTTCAAAGACTAAGTGGTGCCATGGATGAACTCCACAACGAAATACTCGAGCTGGATGAAAAAGTGGATGATCTCAGAGCTGACACTATAAGCTCACAAATAGAACTTGCAGTCTTGCTTTCCAACGAAGGAATAATAAACAGTGAAGACGAGCATCTATTGGCACTTGAGAGAAAACTAAAGAAAATGCTGGGTCCCTCTGCTGTAGACATAGGAAACGGATGCTTCGAAACCAAACACAAATGCAACCAGACCTGCTTAGACAGGATAGCTGCTGGCACCTTTAATGCAGGAGAATTTTCTCTCCCCACTTTTGATTCATTGAACATTACTGCTGCATCTTTAAATGATGATGGATTGGATAACCATACTATACTGCTCTATTACTCAACTGCTGCTTCTAGTTTGGCTGTAACATTAATGCTAGCTATTTTTATTGTTTATATGGTCTCCAGAGACAACGTTTCATGCTCCATCTGTCTATAA
@@ -55,20 +56,20 @@ BVIC	HA	200	S
 
 # Input Parameters for find_positions_of_interest Workflow
 
-| Flag                    | Description                                                                                                         |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `profile`               | singularity, docker, local, sge, slurm. You can use docker or singularity. Use local for running on local computer. |
-| `outdir`                | The file path to where you would like the output directory to write the files. The full file path is required.      |
+| Flag                    | Description                                                                                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `profile`               | singularity, docker, local, sge, slurm. You can use docker or singularity. Use local for running on local computer.                |
+| `outdir`                | The file path to where you would like the output directory to write the files. The full file path is required.                     |
 | `positions_of_interest` | (required) The file path to your `positions_of_interest.txt` file with the format described above. The full file path is required. |
-| `reference_seq_fasta`   | (required) The file path to your reference sequences FASTA file. The full file path is required.                   |
-| `variants_table`        | (required) The file path to your variants table file. The full file path is required.                              |
+| `reference_seq_fasta`   | (required) The file path to your reference sequences FASTA file. The full file path is required.                                   |
+| `variants_table`        | (required) The file path to your variants table file. The full file path is required.                                              |
 
 ### Optional Parameters
 
-| Flag        | Description                                                                                              |
-| ----------- | -------------------------------------------------------------------------------------------------------- |
+| Flag        | Description                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------- |
 | `process_q` | (optional, required for HPC profiles) Provide the name of the processing queue that will submit to the queue. |
-| `email`     | (optional) Provide an email if you would like to receive an email notification upon completion.         |
+| `email`     | (optional) Provide an email if you would like to receive an email notification upon completion.               |
 
 ### Running the Workflow
 
@@ -86,6 +87,7 @@ nextflow run ./main.nf \
 ```
 
 **Parameters:**
+
 - `<profile>`: The execution profile (docker, singularity, local, slurm, sge, etc.)
 - `<OUTDIR>`: The output directory path where results will be written
 - `<filepath>/positions_of_interest.txt`: Full path to your positions of interest file

@@ -294,7 +294,7 @@ workflow flu_o {
         def folder_name = new File(path)
         runid = folder_name.name
     }
-    
+
 
     if (params.amd_platform == false) {
         // MODULE: Concat all fastq files by barcode

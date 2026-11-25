@@ -27,11 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Updated `MIRA_nextflow.sh` script to support new flags with proper command-line parsing and argument passing
 
 ### Changed
+
 - [PR #194](https://github.com/CDCgov/Mira-nf/pull/194) - Added functionality in `NEXTFLOWSAMPLESHEET` module to skip the 1-minute sleep
   if the pipeline is being run locally (task executor is not SGE or slurm)
 
-  
 ### `Deprecated`
+
 - [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - deprecated `--reference_seq_table` and `--variants_of_interest` flags in favor of new clearer naming scheme (`--reference_seq_fasta`, `--variants_table`)
 - [PR #196](https://github.com/CDCgov/Mira-nf/pull/196) - Removed `VARIANTSOFINT` module configuration from all execution profiles (no longer used)
 
